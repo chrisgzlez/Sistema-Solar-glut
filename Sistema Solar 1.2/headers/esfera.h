@@ -14,7 +14,7 @@
 /**
 * Crea un OpenGL objeto esfera
 */
-int myEsfera();
+int esfera();
 
 // your code
 #endif

@@ -1,6 +1,6 @@
 #include <esfera.h>
 
-int myEsfera()
+int esfera()
 {
     int indice;
     

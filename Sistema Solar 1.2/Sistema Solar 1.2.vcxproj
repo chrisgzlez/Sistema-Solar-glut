@@ -130,11 +130,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="headers\esfera.h" />
-    <ClInclude Include="headers\Sistema.h" />
+    <ClInclude Include="headers\sistema.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="resources\esfera.c" />
     <ClCompile Include="source\Basico.cpp" />
+    <ClCompile Include="source\esfera.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

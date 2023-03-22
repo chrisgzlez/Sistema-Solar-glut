@@ -1,6 +1,6 @@
 #include <glut.h>
 
-typedef struct { //declaramos nuestro objeto como una estructura con los siguientes campos
+typedef struct objeto{ //declaramos nuestro objeto como una estructura con los siguientes campos
 	float distancia; 
 	float velocidad_trans;
 	float angulo_trans;

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\Sistema.h">
+    <ClInclude Include="headers\sistema.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="headers\esfera.h">
@@ -26,8 +26,8 @@
     <ClCompile Include="source\Basico.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="resources\esfera.c">
-      <Filter>Archivos de recursos</Filter>
+    <ClCompile Include="source\esfera.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

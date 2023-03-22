@@ -1,9 +1,4 @@
-#include <windows.h>
-#include <stdio.h>
-#include <glut.h>
-#include <gl.h>
-#include <glu.h>
-#include <glaux.h>
+#include <esfera.h>
 
 int myEsfera()
 {
@@ -3618,8 +3613,7 @@ int myEsfera()
 	glVertex3f(0.0964914f, -0.950057f, -0.294893f);
 	glEnd();
 
-	
-
+	glEndList();
 	return indice;
 
 }

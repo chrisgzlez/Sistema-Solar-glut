@@ -40,7 +40,7 @@ void Idle(void) {
 	fAngulo += 0.03f;
 	if (fAngulo > 360)
 		fAngulo -= 360.0f;
-	fAngulo2 += 5.f;
+	fAngulo2 += 0.1f;
 	if (fAngulo > 360)
 		fAngulo -= 360.0f;
 	glutPostRedisplay();

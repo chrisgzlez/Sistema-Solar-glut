@@ -129,10 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="headers\camara.h" />
     <ClInclude Include="headers\esfera.h" />
     <ClInclude Include="headers\sistema.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\camara.cpp" />
     <ClCompile Include="source\esfera.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>

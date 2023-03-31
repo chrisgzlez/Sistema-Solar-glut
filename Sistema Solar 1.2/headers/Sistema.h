@@ -1,4 +1,8 @@
 #include <glut.h>
+#include <windows.h>		// Inclusión de variables de Windows
+#include "glut.h"			// Inclusión de librerías GLUT 
+#include <GL/gl.h>			// Inclusión de librerías GL
+#include <GL/glu.h>			// Inclusión de librerías auxiliare
 
 
 //
@@ -26,3 +30,5 @@ void myTeclasespeciales(int cursor, int x, int y);
 void myEjes();
 int myEsfera();
 void myTelescopio(GLfloat distancia, GLfloat angulo, GLfloat distancia_obj, GLfloat angulo_obj);
+//permite reajustar la venta y el reescalado de esta
+void changeSize(GLint newWidth, GLint newHeight);

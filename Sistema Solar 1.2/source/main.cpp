@@ -9,14 +9,17 @@ Practica 4 Sistema Solar 1.2
 #include "glut.h"			// Inclusión de librerías GLUT 
 #include <GL/gl.h>			// Inclusión de librerías GL
 #include <GL/glu.h>			// Inclusión de librerías auxiliare
-#include "Sistema.h"
 #include "esfera.h"
+#include "sistema.h"
+
+
 
 #include <iostream>
 
+//Tamaño de ventana 
+int w = 500;
+int h = 500;
 
-const int W_WIDTH = 600;	 //Ancho de la ventana
-const int W_HEIGHT = 600;		//Alto de la ventana
 GLfloat fAngulo, fAngulo2;
 
 //declaracion de los Planetas de nuestro sistema solar
@@ -50,6 +53,36 @@ int index_esfera;
 
 void idle() {
     glutPostRedisplay();
+}
+
+//funcion que dibuja los ejes
+void myEjes() {
+
+    glBegin(GL_LINES);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(100.75f, 0.0f, 0.0f);
+    glEnd();
+
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_LINES);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 100.75f, 0.0f);
+    glEnd();
+
+
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glBegin(GL_LINES);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.0, 100.75f);
+    glEnd();
+
+    //Diagonal
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glBegin(GL_LINES);
+    glVertex3f(0.0f, 0.0f, 0.0f);
+    glVertex3f(75.35f, 75.35, 75.35f);
+    glEnd();
 }
 
 
@@ -92,6 +125,9 @@ void display_planeta(Planeta p) {
             // Angulo de rotacion sobre si misma
             // TODO: No todos los planetas giran sobre su eje y
             glRotatef(p.angulo_rot, 0.0, 1.0, 0.0);
+
+            //añadimos los ejes al planeta
+            myEjes();
 
             // Tamanho del planeta
             // Al ser una esfera la escalamos de forma proporcional
@@ -151,7 +187,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	
 	// Fija el tamaño de la ventana
-	glutInitWindowSize(W_WIDTH, W_HEIGHT);
+	glutInitWindowSize(w, h);
 	
 	// Fija la posición de la ventana
 	glutInitWindowPosition(1300, 100);
@@ -168,8 +204,9 @@ int main(int argc, char **argv) {
 
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
+    glutReshapeFunc(changeSize);
 
-
+  
 	glutMainLoop(); // Inicia el lazo de visualización.
 	return 0;
 }

@@ -2,7 +2,7 @@
 #ifndef ESFERA_H
 #define ESFERA_H
 
-
+#include <stdlib.h>
 #include <windows.h>
 #include <stdio.h>
 #include <glut.h>

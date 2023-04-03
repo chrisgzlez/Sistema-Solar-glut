@@ -129,14 +129,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="headers\camara.h" />
     <ClInclude Include="headers\esfera.h" />
-    <ClInclude Include="headers\sistema.h" />
+    <ClInclude Include="headers\Planeta.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\camara.cpp" />
     <ClCompile Include="source\esfera.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Planeta.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

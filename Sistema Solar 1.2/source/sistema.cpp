@@ -1,4 +1,6 @@
-#include <camara.h>
+#include <Planeta.h>
+//#include <camara.h>
+
 
 //fov
 float fovy = 45;

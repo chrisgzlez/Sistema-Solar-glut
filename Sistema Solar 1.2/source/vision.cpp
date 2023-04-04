@@ -7,7 +7,7 @@
 #include <Planeta.h>
 
 #define DIST_CAMARA 50
-#define INCREMENTO 0.1
+#define INCREMENTO M_PI/90 // 2 grados en radianes
 
 float alpha;    // Angulo con respecto a y (anchura)
 float beta;     // Angulo con respecto a x (altura)
@@ -38,22 +38,14 @@ void Camara() {
 
     // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
-    
     // Define el tamaño del espacio
     glOrtho(-1 * aspecto, 1 * aspecto, -1, 1, 0.01, 5*DIST_CAMARA);
-    //glOrtho(-1, 1, -1, 1, 0.1, 2);
-    //colocamos la camara en la posicion deseada
-    //gluLookAt(((float)DIST_CAMARA * (float)sin(alpha) * cos(beta)), ((float)DIST_CAMARA * (float)sin(beta)), ((float)DIST_CAMARA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
 
-    //gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
-
-    // define la posicion del observador dentro del espaciox
-    //gluLookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0);
-
+    // Define la posicion del observador, su punto de referencia y su vector up
     gluLookAt(
-        (GLdouble)DIST_CAMARA * cos(alpha) * (M_PI / 180), (GLdouble)DIST_CAMARA * sin(beta) * (M_PI / 180), (GLdouble)(-1) * DIST_CAMARA * sin(alpha) * (M_PI / 180),
+        (GLdouble)DIST_CAMARA * cos(alpha) * cos(beta), (GLdouble)DIST_CAMARA * sin(beta), (GLdouble)(-1) * DIST_CAMARA * sin(alpha) * cos(beta),
         0, 0, 0,
-        0, 1, 0
+        0, cos(beta), 0
     );
 }
 
@@ -83,6 +75,14 @@ void teclasEspeciales(int cursor, int x, int y) {
             break;
     }
         /*Control para que no se pase de 360*/
+        if (alpha >= 360) { alpha -= 360; }
+        
+        if (beta >= 360) { beta -= 360; }
+
+        if (alpha <= -360) { alpha += 360;  }
+        
+        if (beta <= -360) { beta += 360;  }
+
 
         //volvemos a lanzar
         glutPostRedisplay();
@@ -118,7 +118,7 @@ void changeSize(GLint newWidth, GLint newHeight) {
 */
 
 void onMenu(int opcion) {
-
+    // TODO cambiar esto
     //en funcion del valor de la camara hacemos el telescopio correspondiente.
     switch (opcion) {
         case 1:

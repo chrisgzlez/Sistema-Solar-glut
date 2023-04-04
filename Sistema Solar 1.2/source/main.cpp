@@ -22,6 +22,7 @@ Practica 4 Sistema Solar 1.2
 
 #define INIT_WIDHT 500
 #define INIT_HEIGHT 500
+#define MOVE_INTERVAL 1 //miliseconds
 
 
 GLfloat fAngulo, fAngulo2;
@@ -50,20 +51,19 @@ Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
 
 Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, index_esfera, 1, 0.78, 0.2 );
 Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, index_esfera, 1.f, 0., 0. );
-Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.02, 0., 0.06, index_esfera, 0., 1.f, 0. );
-Planeta p3 = Planeta("p3", 0.9, 0.01, 0., 0.01, 0., 0.03, index_esfera, 0., 0., 1.f );
+Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.15, 0., 0.06, index_esfera, 0., 1.f, 0. );
+Planeta p3 = Planeta("p3", 0.1, -0.15, 0., 0.1, 0., 0.03, index_esfera, 0., 0., 1.f );
 
+Sistema sis;
 
-Planeta sistema[] = { sol_prueba, p1, p2, p3 };
-std::vector<Planeta> plts = { sol_prueba, p1, p2, p3 };
-Sistema sis = Sistema(plts);
-
-
-//Planeta sistema[] = { sol_prueba };
-int n_planetas = sizeof(sistema) / sizeof(Planeta);
+unsigned int days = 0;
+void timer() {
+    days++;
+}
 
 
 void idle() {
+    timer();
     glutPostRedisplay();
 }
 
@@ -98,8 +98,8 @@ void display(void) {
 
     for (auto & p : sis.planetas()) {
         p.second.display(index_esfera);
-        p.second.translate();
-        p.second.rotate();
+        p.second.move(days);
+
     }
 
     glFlush();// Intercambia los buffers gráficos disponibles
@@ -114,10 +114,13 @@ void openGlInit() {
 	glEnable(GL_DEPTH_TEST); // z-buffer
 	glEnable(GL_CULL_FACE); //ocultacion caras back
 	glCullFace(GL_NORMALIZE);
-
 }
 
 int main(int argc, char **argv) {
+
+    p2.addSatelite(p3);
+    std::vector<Planeta> plts = { sol_prueba, p1, p2 };
+    sis = Sistema(plts);
 
 	// Inicializa las GLUT
 	glutInit(&argc, argv);
@@ -148,8 +151,6 @@ int main(int argc, char **argv) {
     
     menu();
 
-
-  
 	glutMainLoop(); // Inicia el lazo de visualización.
 	return 0;
 }

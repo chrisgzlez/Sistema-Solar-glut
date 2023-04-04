@@ -1,6 +1,10 @@
 #ifndef PLANETA_H
 #define PLANETA_H
 
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <stdlib.h>         
 #include <glut.h>
 #include <windows.h>		// Inclusión de variables de Windows
@@ -14,13 +18,14 @@
 class Planeta {
 private:
     std::string _name;
+    std::string _orbits_around;  // Planeta/Estrella alrededor del que gira
     GLfloat     _dist;           // Distancia al centro
     GLfloat     _vel_trans;      // Velocidad de transalacion
     GLfloat     _vel_rot;        // Velocidad rotacion
     GLfloat     _size;           // Size del planeta
     GLuint      _render;    // lista de comandos para genera TODO algo
 
-    std::vector<Planeta> _satelites;
+    std::vector<Planeta> _satelites;    // lista de satelites del planeta
     // Telescopio telescopio;
 
     // colores rgb del planeta
@@ -66,6 +71,35 @@ public:
      **************************************************************************************************/
     const std::string& nombre() const;
 
+    /**************************************************************************************************
+     * <summary>	Gets the distance. </summary>
+     *
+     * <remarks>	Pc, 04/04/2023. </remarks>
+     *
+     * <returns>	A reference to a const GLuint. </returns>
+     **************************************************************************************************/
+
+    const GLuint& dist() const;
+
+    /**************************************************************************************************
+     * <summary>	Orbits around. </summary>
+     *
+     * <remarks>	Pc, 04/04/2023. </remarks>
+     *
+     * <returns>	A reference to a const std::string. </returns>
+     **************************************************************************************************/
+
+    const std::string& orbitsAround() const;
+
+    /**************************************************************************************************
+     * <summary>	Orbits around. </summary>
+     *
+     * <remarks>	Pc, 04/04/2023. </remarks>
+     *
+     * <returns>	A reference to a std::string. </returns>
+     **************************************************************************************************/
+    std::string& orbitsAround();
+
 
     /**************************************************************************************************
      * <summary>	Gets the satelites. </summary>
@@ -78,13 +112,36 @@ public:
     const std::vector<Planeta>& satelites() const;
 
     /**************************************************************************************************
+     * <summary>	Adds a satelite. </summary>
+     *
+     * <remarks>	Pc, 04/04/2023. </remarks>
+     *
+     * <param name="sat">	[in,out] A Planeta to process. </param>
+     **************************************************************************************************/
+
+    void addSatelite(Planeta& sat);
+
+    /**************************************************************************************************
+     * <summary>	Adds a satelite. </summary>
+     *
+     * <remarks>	Pc, 04/04/2023. </remarks>
+     *
+     * <param name="satelites">	The satelites. </param>
+     **************************************************************************************************/
+
+    void addSatelite(std::vector<Planeta> &satelites);
+
+    void move(unsigned int days);
+
+    void showOrbita();
+
+    /**************************************************************************************************
      * <summary>	Realiza el dislay del Planeta y de sus satelites. </summary>
      *
      * <remarks>	Pc, 03/04/2023. </remarks>
      *
      * <param name="esfera">	The esfera. </param>
      **************************************************************************************************/
-
     void display(GLuint esfera);
 
     /**************************************************************************************************
@@ -92,14 +149,14 @@ public:
      *
      * <remarks>	Pc, 03/04/2023. </remarks>
      **************************************************************************************************/
-    void translate();
+    void translate(unsigned int time);
 
     /**************************************************************************************************
      * <summary>	Rota el planeta sobre su propio eje. </summary>
      *
      * <remarks>	Pc, 03/04/2023. </remarks>
      **************************************************************************************************/
-    void rotate();
+    void rotate(unsigned int time);
 };
 
 #endif

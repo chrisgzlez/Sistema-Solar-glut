@@ -8,7 +8,6 @@ Sistema::Sistema(std::vector<Planeta> &planets) {
     this->add(planets);
 }
 
-
 std::map<const std::string, Planeta> &Sistema::planetas() {
     return this->_planetas;
 }

@@ -1,8 +1,8 @@
 #include <esfera.h>
 
-int esfera()
+GLuint esfera()
 {
-    int indice;
+    GLuint indice;
     
     // Genera una lista con 1 único elemento que será nuestra esfera
     indice = glGenLists(1); 

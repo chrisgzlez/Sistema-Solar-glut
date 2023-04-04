@@ -2,14 +2,14 @@
 //#include <camara.h>
 
 
-Planeta::Planeta(GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLuint list, GLfloat r, GLfloat g, GLfloat b) {
+Planeta::Planeta(GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLuint render, GLfloat r, GLfloat g, GLfloat b) {
     this->dist = dist;
     this->vel_trans = vt;
     this->angulo_trans = at;
     this->vel_rot = vr;
     this->angulo_rot = ar;
     this->size = s;
-    this->listarender = list;
+    this->render = render;
     this->red = r;
     this->green = g;
     this->blue = b;
@@ -60,7 +60,7 @@ void Planeta::rotate() {
         this->angulo_rot -= 360.0f;
 }
 
-void Planeta::display(int esfera) {
+void Planeta::display() {
 
     // Cargamos la matriz identidad
     glLoadIdentity();
@@ -68,43 +68,49 @@ void Planeta::display(int esfera) {
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 
+        // todos los planetas rotan en el mismo plano con respecto al sol
 
-    // todos los planetas rotan en el mismo plano con respecto al sol
+        // Rotacion de translacion
+        // con respecto al eje y en la posicion actual (origen)
+        glRotatef(this->angulo_trans, 0.0, 1.0, 0.0);
 
-    // Rotacion de translacion
-    // con respecto al eje y en la posicion actual (origen)
-    glRotatef(this->angulo_trans, 0.0, 1.0, 0.0);
+        // Transalcion a la posicion del planeta
+        // permite que el valor anterior genere transalacion
+        glTranslatef(this->dist, 0.0, 0.0);
 
-    // Transalcion a la posicion del planeta
-    // permite que el valor anterior genere transalacion
-    glTranslatef(this->dist, 0.0, 0.0);
+        // Realizamos una copia de esta matriz y la pusheamos al stack 
+        // Se convierte en la matriz base y su posicion en el origen
+        glPushMatrix();
 
-    // Realizamos una copia de esta matriz y la pusheamos al stack 
-    // Se convierte en la matriz base y su posicion en el origen
-    glPushMatrix();
+            // Angulo de rotacion sobre si misma
+            // TODO: No todos los planetas giran sobre su eje y
+            glRotatef(this->angulo_rot, 0.0, 1.0, 0.0);
 
-    // Angulo de rotacion sobre si misma
-    // TODO: No todos los planetas giran sobre su eje y
-    glRotatef(this->angulo_rot, 0.0, 1.0, 0.0);
+            //añadimos los ejes al planeta
+            ejes();
 
-    //añadimos los ejes al planeta
-    ejes();
+            // Si tiene satelites le hace el display
+            if (!this->satelites.empty()) {
+                for (Planeta sat : this->satelites) {
+                    sat.display();
+                }
+            }
 
-    // Tamanho del planeta
-    // Al ser una esfera la escalamos de forma proporcional
-    glScalef(this->size, this->size, this->size);
+            // Tamanho del planeta
+            // Al ser una esfera la escalamos de forma proporcional
+            glScalef(this->size, this->size, this->size);
 
-    // Color del planeta en rgb
-    glColor3f(this->red, this->green, this->blue);
+            // Color del planeta en rgb
+            glColor3f(this->red, this->green, this->blue);
 
-    // Crea la esfera
-    // Ejecuta la lista de comandos necesarios para crear
-    // una esfera
-    glCallList(esfera);
+            // Crea la esfera
+            // Ejecuta la lista de comandos necesarios para crear
+            // una esfera
+            glCallList(this->render);
 
-    // Quitamos las matrices del stack para dejarlo limpio
-    // Y no afectar a futuras operaciones
-    glPopMatrix();
+        // Quitamos las matrices del stack para dejarlo limpio
+        // Y no afectar a futuras operaciones
+        glPopMatrix();
     glPopMatrix();
 
     // HACK: para crear los satélitos, no hacer el pop de la primera matriz

@@ -10,11 +10,14 @@
 #include <glu.h>
 #include <glaux.h>
 
-
-/**
-* Crea un OpenGL objeto esfera
-*/
-int esfera();
+/**************************************************************************************************
+ * <summary>	Crea un OpenGL objeto esfera. </summary>
+ *
+ * <remarks>	Pc, 04/04/2023. </remarks>
+ *
+ * <returns>	An int. </returns>
+ **************************************************************************************************/
+GLuint esfera();
 
 // your code
 #endif

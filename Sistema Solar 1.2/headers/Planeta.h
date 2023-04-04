@@ -4,6 +4,7 @@
 #include "glut.h"			// Inclusión de librerías GLUT 
 #include <GL/gl.h>			// Inclusión de librerías GL
 #include <GL/glu.h>			// Inclusión de librerías auxiliare
+#include <vector>
 
 
 class Planeta {
@@ -14,7 +15,10 @@ private:
     GLfloat     vel_rot;        // Velocidad rotacion
     GLfloat     angulo_rot;     // Angulo de rotacion
     GLfloat     size;           // Size del planeta
-    GLuint      listarender;    // lista de comandos para genera TODO algo
+    GLuint      render;    // lista de comandos para genera TODO algo
+
+    std::vector<Planeta> satelites;
+    // Telescopio telescopio;
 
     // colores rgb del planeta
     GLfloat     red;
@@ -41,16 +45,16 @@ public:
      * <param name="g">   	Color verde rgb. </param>
      * <param name="b">   	Color azul rgb. </param>
      **************************************************************************************************/
-    Planeta(GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLuint list, GLfloat r, GLfloat g, GLfloat b);
+    Planeta(GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLuint render, GLfloat r, GLfloat g, GLfloat b);
 
     /**************************************************************************************************
      * <summary>	Realiza el dislay del Planeta y de sus satelites. </summary>
      *
      * <remarks>	Pc, 03/04/2023. </remarks>
      *
-     * <param name="esfera">	Indice de la lista de comandos para crear la esfera. </param>
      **************************************************************************************************/
-    void display(int esfera);
+
+    void display();
 
     /**************************************************************************************************
      * <summary>	Trasalada el planeta a lo largo de su orbita. </summary>

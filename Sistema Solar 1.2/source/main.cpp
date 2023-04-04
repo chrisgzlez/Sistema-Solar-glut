@@ -4,7 +4,7 @@ Autores: Ivan Quintáns González y Cristian Novoa Gonzalez
 Practica 4 Sistema Solar 1.2
 *************************************************************/
 
-#include <stdlib.h>         // Necesaria en todos para evitar conflicto con glut
+//#include <stdlib.h>         // Necesaria en todos para evitar conflicto con glut
                             // Vease: https://stackoverflow.com/questions/14402/glut-exit-redefinition-error
 
 #include <windows.h>		// Inclusión de variables de Windows
@@ -23,6 +23,7 @@ int w = 500;
 int h = 500;
 
 GLfloat fAngulo, fAngulo2;
+GLuint index_esfera = esfera();
 
 //declaracion de los Planetas de nuestro sistema solar
 
@@ -30,16 +31,16 @@ GLfloat fAngulo, fAngulo2;
 //{distancia,vel_trans,ang_rot,vel_rot,ang_rot,tam
 	//listarender,color1,color2,colro3}
 
-Planeta sol = Planeta( 0,0,0,10,0,100,0,1,1,0 );
-Planeta mercurio = Planeta( 200,5.3,0,50,0,50,0,1,0,0 );
-Planeta venus = Planeta( 350,8,0,30,0,50,0,0,1,0 );
-Planeta luna = Planeta( 100,9,0,10,0,20,0,1,0,0 );
-Planeta tierra = Planeta( 600,5,0,10,0,80,0,0,0,1 );
-Planeta jupiter = Planeta( 900,6,0,60,0,60,0,0,0,1 );
-Planeta marte = Planeta( 800,2,0,10,0,30,0,0,0,1 );
-Planeta saturno = Planeta( 1100,4,0,20,0,50,0,1,0,0 );
-Planeta urano = Planeta( 1250,3,0,40,0,30,0,0,1,0 );
-Planeta neptuno = Planeta( 1350,4.5,0,10,0,50,0,0,0,1 );
+Planeta sol = Planeta( 0,0,0,10,0,100, index_esfera,1,1,0 );
+Planeta mercurio = Planeta( 200,5.3,0,50,0,50, index_esfera,1,0,0 );
+Planeta venus = Planeta( 350,8,0,30,0,50, index_esfera,0,1,0 );
+Planeta luna = Planeta( 100,9,0,10,0,20, index_esfera,1,0,0 );
+Planeta tierra = Planeta( 600,5,0,10,0,80, index_esfera,0,0,1 );
+Planeta jupiter = Planeta( 900,6,0,60,0,60, index_esfera,0,0,1 );
+Planeta marte = Planeta( 800,2,0,10,0,30, index_esfera,0,0,1 );
+Planeta saturno = Planeta( 1100,4,0,20,0,50, index_esfera,1,0,0 );
+Planeta urano = Planeta( 1250,3,0,40,0,30, index_esfera,0,1,0 );
+Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
 
 Planeta sol_prueba = Planeta( 0., 0., 0., 0.03, 0., 0.25, 0, 1, 0.78, 0.2 );
 Planeta p1 = Planeta( 0.5, 0.03, 0., 0.03, 0., 0.08, 0, 1.f, 0., 0. );
@@ -47,18 +48,14 @@ Planeta p2 = Planeta( 0.7, 0.02, 0., 0.02, 0., 0.06, 0, 0., 1.f, 0. );
 Planeta p3 = Planeta( 0.9, 0.01, 0., 0.01, 0., 0.03, 0, 0., 0., 1.f );
 
 
-// Planeta sistema[] = { sol_prueba, p1, p2, p3 };
-Planeta sistema[] = { sol_prueba };
+Planeta sistema[] = { sol_prueba, p1, p2, p3 };
+//Planeta sistema[] = { sol_prueba };
 int n_planetas = sizeof(sistema) / sizeof(Planeta);
 
-
-int index_esfera;
 
 void idle() {
     glutPostRedisplay();
 }
-
-
 
 
 // Función de dibujo
@@ -89,7 +86,6 @@ void openGlInit() {
 }
 
 int main(int argc, char **argv) {
-    std::cout << "Hola" << std::endl;
 
 	// Inicializa las GLUT
 	glutInit(&argc, argv);
@@ -111,7 +107,6 @@ int main(int argc, char **argv) {
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	index_esfera = esfera();
 
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);

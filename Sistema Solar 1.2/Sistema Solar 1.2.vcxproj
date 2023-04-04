@@ -134,10 +134,10 @@
     <ClInclude Include="headers\vision.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="headers\vision.cpp" />
     <ClCompile Include="source\esfera.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Planeta.cpp" />
+    <ClCompile Include="source\vision.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

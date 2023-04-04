@@ -22,6 +22,7 @@ Practica 4 Sistema Solar 1.2
 
 #define INIT_WIDHT 500
 #define INIT_HEIGHT 500
+#define MOVE_INTERVAL 1 //miliseconds
 
 
 GLfloat fAngulo, fAngulo2;
@@ -62,8 +63,21 @@ Sistema sis = Sistema(plts);
 //Planeta sistema[] = { sol_prueba };
 int n_planetas = sizeof(sistema) / sizeof(Planeta);
 
+void movement(int estado) {
+    for (auto& p : sis.planetas()) {
+        p.second.translate();
+        p.second.rotate();
+    }
+}
+
+unsigned int days = 0;
+void timer() {
+    days++;
+}
 
 void idle() {
+    movement(days);
+    timer();
     glutPostRedisplay();
 }
 
@@ -92,8 +106,6 @@ void display(void) {
 
     for (auto & p : sis.planetas()) {
         p.second.display(index_esfera);
-        p.second.translate();
-        p.second.rotate();
     }
 
     glFlush();// Intercambia los buffers gráficos disponibles
@@ -141,6 +153,8 @@ int main(int argc, char **argv) {
     glutReshapeFunc(changeSize);
     
     menu();
+
+    movement(0);
 
 
   

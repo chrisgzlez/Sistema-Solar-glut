@@ -1,10 +1,11 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "vision.h"
+#include <vision.h>
 #include <GL/glu.h>	
+#include <iostream>
 
-#define DIST_CAMARA 5
+#define DIST_CAMARA 50
 #define INCREMENTO 0.1
 
 float alpha;    // Angulo con respecto a y (anchura)
@@ -15,6 +16,9 @@ float fovy = 45;
 //camara por defecto en modo voayager
 int camara = 1;
 
+// Varible global usada para redefinir la perspectiva y el ratio de aspecto de los objetos
+float aspecto;
+
 // TODO: -REVISAR EL INCREMENTO
 //       -CONTROLAR QUE VUELVA A CERO SI REALIZA LA VUELTA COMPLETA
 //       -CAMBIAR VALORES DE LOOK AT Y DEL ORTHO
@@ -23,10 +27,7 @@ int camara = 1;
 
 
 
-void Camara(int w, int h) {
-
-    //relacion de aspecto entre el ancho y el alto de la ventana
-    float aspecto = (float)w / (float)h;
+void Camara() {
 
     //configuramos la matriz de proyeccion
     glMatrixMode(GL_PROJECTION);
@@ -36,20 +37,26 @@ void Camara(int w, int h) {
 
     // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
-    glOrtho(-3 * aspecto, 3 * aspecto, -3, 3, 0.1, DIST_CAMARA);
-
+    
+    // Define el tamaño del espacio
+    glOrtho(-1 * aspecto, 1 * aspecto, -1, 1, 0.01, 5*DIST_CAMARA);
+    //glOrtho(-1, 1, -1, 1, 0.1, 2);
     //colocamos la camara en la posicion deseada
-    //gluLookAt(((float)DISTANCIA * (float)sin(alpha) * cos(beta)), ((float)DISTANCIA * (float)sin(beta)), ((float)DISTANCIA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
+    //gluLookAt(((float)DIST_CAMARA * (float)sin(alpha) * cos(beta)), ((float)DIST_CAMARA * (float)sin(beta)), ((float)DIST_CAMARA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
+
+    //gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+
+    // define la posicion del observador dentro del espaciox
+    //gluLookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0);
 
     gluLookAt(
         (GLdouble)DIST_CAMARA * cos(alpha) * (M_PI / 180), (GLdouble)DIST_CAMARA * sin(beta) * (M_PI / 180), (GLdouble)(-1) * DIST_CAMARA * sin(alpha) * (M_PI / 180),
         0, 0, 0,
         0, 1, 0
     );
-
 }
 
-void teclasEspeciales(int cursor) {
+void teclasEspeciales(int cursor, int x, int y) {
 
     //en funcion del cursor
     
@@ -64,30 +71,28 @@ void teclasEspeciales(int cursor) {
             break;
         //derecha
         case GLUT_KEY_RIGHT:
-            alpha -= INCREMENTO;
+            alpha += INCREMENTO;
             break;
         //izquierda
         case GLUT_KEY_LEFT:
-            alpha += INCREMENTO;
+            alpha -= INCREMENTO;
             break;
         //en otro caso
         default:
             break;
-
-
+    }
         /*Control para que no se pase de 360*/
 
         //volvemos a lanzar
         glutPostRedisplay();
-    
-    }
 
 }
 
 void changeSize(GLint newWidth, GLint newHeight) {
 
+    aspecto = (float)newWidth / (float)newHeight;
+
     //configuramos el viewport
-    
     glViewport(0, 0, newWidth, newHeight);
 
     //configuramos la matriz de proyeccion y la matriz identidad
@@ -96,8 +101,13 @@ void changeSize(GLint newWidth, GLint newHeight) {
     glLoadIdentity();
 
     //configuramos la perspectiva (fovy,relacion de aspecto,near,far)
-    
-    gluPerspective(fovy, (float)newWidth / (float)newHeight, 1.0, 500);
+    std::cout << "Width: " << newWidth
+        << " Height: " << newHeight
+        << " Ratio: " << (float)newWidth / (float)newHeight
+        << std::endl;
+
+    gluPerspective(fovy, (float)newWidth / (float)newHeight, .01, 500.);
+    //glutPostRedisplay();
 }
 
 /*

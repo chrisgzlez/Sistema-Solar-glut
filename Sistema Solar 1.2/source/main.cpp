@@ -20,9 +20,9 @@ Practica 4 Sistema Solar 1.2
 
 #include <iostream>
 
-//Tamaño de ventana 
-int w = 500;
-int h = 500;
+#define INIT_WIDHT 500
+#define INIT_HEIGHT 500
+
 
 GLfloat fAngulo, fAngulo2;
 GLuint index_esfera;
@@ -70,20 +70,34 @@ void idle() {
 
 // Función de dibujo
 void display(void) {
+
+
 	// Limpia los buffer de color y profundidad
-    
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glMatrixMode(GL_MODELVIEW);
+    // switch tipos de camara
+    // TODO
+    Camara();
+
+
+    glMatrixMode(GL_MODELVIEW);
+	
+
+    // Cargamos la matriz identidad
+    glLoadIdentity();
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+
     for (auto & p : sis.planetas()) {
         p.second.display(index_esfera);
         p.second.translate();
         p.second.rotate();
     }
 
+    glFlush();// Intercambia los buffers gráficos disponibles
 	glutSwapBuffers();
-	glFlush();// Intercambia los buffers gráficos disponibles
 }
 
 void openGlInit() {
@@ -93,7 +107,7 @@ void openGlInit() {
 	glClearColor(.0f, 0.f, 0.f, .0f);  // valor limpieza buffer color (fondo)
 	glEnable(GL_DEPTH_TEST); // z-buffer
 	glEnable(GL_CULL_FACE); //ocultacion caras back
-	glCullFace(GL_BACK);
+	glCullFace(GL_NORMALIZE);
 
 }
 
@@ -106,7 +120,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	
 	// Fija el tamaño de la ventana
-	glutInitWindowSize(w, h);
+	glutInitWindowSize(INIT_WIDHT, INIT_HEIGHT);
 	
 	// Fija la posición de la ventana
 	glutInitWindowPosition(1300, 100);
@@ -119,12 +133,15 @@ int main(int argc, char **argv) {
 	openGlInit();
     index_esfera = esfera();
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
+    glutSpecialFunc(teclasEspeciales);
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
-    //glutReshapeFunc(changeSize);
+
+    // Cosas
+    glutReshapeFunc(changeSize);
+    
+    menu();
+
 
   
 	glutMainLoop(); // Inicia el lazo de visualización.

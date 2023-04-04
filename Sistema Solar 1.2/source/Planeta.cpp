@@ -77,9 +77,6 @@ void Planeta::rotate() {
 
 void Planeta::display(GLuint esfera) {
 
-    // Cargamos la matriz identidad
-    glLoadIdentity();
-
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 

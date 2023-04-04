@@ -1,0 +1,71 @@
+#include <stdlib.h>         
+#include <glut.h>
+#include <windows.h>		// Inclusión de variables de Windows
+#include "glut.h"			// Inclusión de librerías GLUT 
+#include <GL/gl.h>			// Inclusión de librerías GL
+#include <GL/glu.h>			// Inclusión de librerías auxiliare
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Camara del programa . </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+///
+/// <param name="w">	The width. </param>
+/// <param name="h">	The height. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Camara(int w, int h);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Teclas que nos permiten desplazarnos por el sistema solar. </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+///
+/// <param name="cursor">	The cursor. </param>
+/// <param name="x">	 	The x coordinate. </param>
+/// <param name="y">	 	The y coordinate. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Teclasespeciales(int cursor, int x, int y);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Telescopio (desde la tierra al punto que nosotros queramos). </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+///
+/// <param name="distancia">		The distancia. </param>
+/// <param name="angulo">			The angulo. </param>
+/// <param name="distancia_obj">	The distancia object. </param>
+/// <param name="angulo_obj">   	The angulo object. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Telescopio(GLfloat distancia, GLfloat angulo, GLfloat distancia_obj, GLfloat angulo_obj);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Change size.Permite reajustar la venta y el reescalado de esta </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+///
+/// <param name="newWidth"> 	Width of the new. </param>
+/// <param name="newHeight">	Height of the new. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void changeSize(GLint newWidth, GLint newHeight);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Permite elegir la camara que queramos en el menu y pasarsela al display. </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+///
+/// <param name="opcion">	The opcion. </param>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void onMenu(int opcion);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>	Creacion y configuracion del menu. </summary>
+///
+/// <remarks>	Ivanq, 4/4/2023. </remarks>
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void myMenu();

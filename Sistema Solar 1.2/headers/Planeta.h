@@ -74,10 +74,3 @@ public:
 
 #define CR 0.0175
 #define MYTIEMPO 41
-
-void myCamara(int w, int h);
-
-void myTeclasespeciales(int cursor, int x, int y);
-void myTelescopio(GLfloat distancia, GLfloat angulo, GLfloat distancia_obj, GLfloat angulo_obj);
-//permite reajustar la venta y el reescalado de esta
-void changeSize(GLint newWidth, GLint newHeight);

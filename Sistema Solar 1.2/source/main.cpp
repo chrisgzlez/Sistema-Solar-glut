@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
 
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
-    glutReshapeFunc(changeSize);
+    //glutReshapeFunc(changeSize);
 
   
 	glutMainLoop(); // Inicia el lazo de visualización.

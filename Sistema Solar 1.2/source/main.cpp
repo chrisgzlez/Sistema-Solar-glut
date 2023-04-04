@@ -77,7 +77,7 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // switch tipos de camara
-    // TODO
+    // TODO: -Satelites de planeta convertir a map en vez de vector.
     
     if (vectoropciones[camara] == "Voyayer") Camara();
     else {
@@ -86,46 +86,7 @@ void display(void) {
         else telescopio(sis.planetas()["tierra"], sis.planetas()[nombreplaneta]);
 
     }
-    
-    vectoropciones[camara] == "Voyayer" 
    
-    switch (camara) {
-        case 1:
-            Camara();
-            break;
-        case 2:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, sol.distancia, sol.angulo_trans, 0);
-            break;
-        case 3:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, mercurio.distancia, mercurio.angulo_trans, 0);
-            break;
-        case 4:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, venus.distancia, venus.angulo_trans, 0);
-            break;
-        case 5:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, marte.distancia, marte.angulo_trans, 0);
-            break;
-        case 6:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, jupiter.distancia, jupiter.angulo_trans, 0);
-            break;
-        case 7:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, saturno.distancia, saturno.angulo_trans, 0);
-            break;
-        case 8:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, urano.distancia, urano.angulo_trans, 0);
-            break;
-        case 9:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, neptuno.distancia, neptuno.angulo_trans, 0);
-            break;
-        case 10:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, luna.distancia, luna.angulo_trans, 1);
-            break;
-        case 11:
-            myTelescopio(tierra.distancia, tierra.angulo_trans, ISS.distancia, ISS.angulo_trans, 1);
-            break;
-    }
-
-
     glMatrixMode(GL_MODELVIEW);
 	
 

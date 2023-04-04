@@ -4,7 +4,7 @@ Autores: Ivan Quintáns González y Cristian Novoa Gonzalez
 Practica 4 Sistema Solar 1.2
 *************************************************************/
 
-//#include <stdlib.h>         // Necesaria en todos para evitar conflicto con glut
+#include <stdlib.h>         // Necesaria en todos para evitar conflicto con glut
                             // Vease: https://stackoverflow.com/questions/14402/glut-exit-redefinition-error
 
 #include <windows.h>		// Inclusión de variables de Windows
@@ -65,7 +65,7 @@ void display(void) {
 
 	//glMatrixMode(GL_MODELVIEW);
     for (int i = 0; i < n_planetas; i++) {
-        sistema[i].display(index_esfera);
+        sistema[i].display();
         sistema[i].translate();
         sistema[i].rotate();
     }

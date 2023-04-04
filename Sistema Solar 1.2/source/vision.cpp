@@ -4,6 +4,7 @@
 #include <vision.h>
 #include <GL/glu.h>	
 #include <iostream>
+#include <Planeta.h>
 
 #define DIST_CAMARA 50
 #define INCREMENTO 0.1
@@ -195,3 +196,33 @@ void menu(void) {
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
+void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
+
+    //configuramos la matriz de proyeccion
+    glMatrixMode(GL_PROJECTION);
+
+    //matriz identidad
+    glLoadIdentity();
+
+    //tenemos que mirar desde la tierra hasta el planeta que queramos mirar.
+    
+    gluPerspective(fovy,aspecto, 1, 2000);
+
+    //en primer lugar comprobamos si es un satelite.
+
+    //si el pov es un satelite
+    if (1) {
+        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist * sin(PointOffView._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist * sin(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180),
+            0, 1, 0);
+    }
+    else {
+        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist * sin(PointOffView._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos(PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist * sin(PointOffRefference._angulo_trans * M_PI / 180),
+            0, 1, 0);
+
+    }
+
+
+
+}

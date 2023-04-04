@@ -28,6 +28,31 @@ const std::vector<Planeta>& Planeta::satelites() const {
     return this->_satelites;
 }
 
+const GLuint& Planeta::dist() const {
+    return this->_dist;
+}
+
+const std::string& Planeta::orbitsAround() const {
+    return this->_orbits_around;
+}
+
+std::string& Planeta::orbitsAround() {
+    return this->_orbits_around;
+}
+
+void Planeta::addSatelite(Planeta& sat) {
+    // Añadimos satelite al vector de satelites
+    this->_satelites.push_back(sat);
+
+    // Actualizamos orbita principal del satelite
+    sat.orbitsAround() = this->nombre();
+}
+
+void Planeta::addSatelite(std::vector<Planeta>& satelites) {
+    for (Planeta &sat : satelites) {
+        this->addSatelite(sat);
+    }
+}
 
 
 //funcion que dibuja los ejes
@@ -63,22 +88,42 @@ void Planeta::ejes() {
 }
 
 
-void Planeta::translate() {
-    this->_angulo_trans += this->_vel_trans;
+void Planeta::translate(unsigned int time) {
+    this->_angulo_trans = time * this->_vel_trans;
     if (this->_angulo_trans > 360)
         this->_angulo_trans -= 360.0f;
 }
 
-void Planeta::rotate() {
-    this->_angulo_rot += this->_vel_rot;
+
+void Planeta::rotate(unsigned int time) {
+    this->_angulo_rot = time * this->_vel_rot;
     if (this->_angulo_rot > 360)
         this->_angulo_rot -= 360.0f;
+}
+
+void Planeta::showOrbita() {
+    GLfloat x_pos, z_pos;
+    GLfloat step = 2 * M_PI / 360;
+
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i <= 360; i++) {
+        x_pos = (GLfloat)cos(i * step);
+        z_pos = (GLfloat)sin(i * step);
+        glColor3f(1., 1., 1.);
+        glVertex3f(this->_dist * x_pos, 0.0, this->_dist * z_pos);
+    }
+    glEnd();
+    glFlush();
 }
 
 void Planeta::display(GLuint esfera) {
 
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
+
+        /// Orbita
+        this->showOrbita();
+        /// 
 
         // todos los planetas rotan en el mismo plano con respecto al sol
 

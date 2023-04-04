@@ -117,7 +117,7 @@ void changeSize(GLint newWidth, GLint newHeight) {
 */
 
 void onMenu(int opcion) {
-
+    // TODO cambiar esto
     //en funcion del valor de la camara hacemos el telescopio correspondiente.
     switch (opcion) {
         case 1:

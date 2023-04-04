@@ -63,20 +63,19 @@ Sistema sis = Sistema(plts);
 //Planeta sistema[] = { sol_prueba };
 int n_planetas = sizeof(sistema) / sizeof(Planeta);
 
-void movement(int estado) {
-    for (auto& p : sis.planetas()) {
-        p.second.translate();
-        p.second.rotate();
-    }
-}
-
 unsigned int days = 0;
 void timer() {
     days++;
 }
 
+// Actualiza la posicion del planeta en funcion del tiempo
+void movement(Planeta& p) {
+    p.translate(days);
+    p.rotate(days);
+}
+
+
 void idle() {
-    movement(days);
     timer();
     glutPostRedisplay();
 }
@@ -106,6 +105,8 @@ void display(void) {
 
     for (auto & p : sis.planetas()) {
         p.second.display(index_esfera);
+        movement(p.second);
+
     }
 
     glFlush();// Intercambia los buffers gráficos disponibles
@@ -120,7 +121,6 @@ void openGlInit() {
 	glEnable(GL_DEPTH_TEST); // z-buffer
 	glEnable(GL_CULL_FACE); //ocultacion caras back
 	glCullFace(GL_NORMALIZE);
-
 }
 
 int main(int argc, char **argv) {
@@ -154,10 +154,6 @@ int main(int argc, char **argv) {
     
     menu();
 
-    movement(0);
-
-
-  
 	glutMainLoop(); // Inicia el lazo de visualización.
 	return 0;
 }

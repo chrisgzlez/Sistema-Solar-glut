@@ -39,7 +39,7 @@ void Camara(int w, int h) {
 
 }
 
-void Teclasespeciales(int cursor) {
+void teclasEspeciales(int cursor) {
 
     //en funcion del cursor
     
@@ -90,6 +90,12 @@ void changeSize(GLint newWidth, GLint newHeight) {
     gluPerspective(fovy, (float)newWidth / (float)newHeight, 1.0, 500);
 }
 
+/*
+ * Caso camara, manejar
+ * Caso de planetas: le pasamos el nombre y hacemos sis.planetas()[nombre_planeta]
+ *      Y obtenemos los datos de ese planeta
+*/
+
 void onMenu(int opcion) {
 
     //en funcion del valor de la camara hacemos el telescopio correspondiente.
@@ -134,7 +140,7 @@ void onMenu(int opcion) {
 }
 
 
-void myMenu(void) {
+void menu(void) {
     int menuFondo;
 
     //creamos el menu
@@ -142,6 +148,18 @@ void myMenu(void) {
 
     //añadimos las entradas
     glutAddMenuEntry("Voyayer", 1);
+
+    int index = 1;
+
+    /*
+    * Crear las entradas de forma dinamica
+    for (std::string nombre_planeta : sis.showPlanetas()) {
+        glutAddMenuEntry(nombre_planeta, index++);
+        planetas.push_back(nombre_planeta);
+    }
+    */
+
+
     glutAddMenuEntry("Sol", 2);
     glutAddMenuEntry("Mercurio", 3);
     glutAddMenuEntry("Venus", 4);

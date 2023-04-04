@@ -4,6 +4,7 @@
 #include "glut.h"			// Inclusión de librerías GLUT 
 #include <GL/gl.h>			// Inclusión de librerías GL
 #include <GL/glu.h>			// Inclusión de librerías auxiliare
+#include <Planeta.h>
 
 /**************************************************************************************************
  * <summary>	Camara del programa . </summary>
@@ -39,7 +40,7 @@ void teclasEspeciales(int cursor, int x, int y);
  * <param name="angulo_obj">   	The angulo object. </param>
  **************************************************************************************************/
 
-void telescopio(GLfloat distancia, GLfloat angulo, GLfloat distancia_obj, GLfloat angulo_obj);
+void telescopio(Planeta& PointOffView, Planeta& PointOffRefference );
 
 /**************************************************************************************************
  * <summary>	Change size.Permite reajustar la venta y el reescalado de esta. </summary>

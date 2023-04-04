@@ -11,8 +11,9 @@ Practica 4 Sistema Solar 1.2
 #include "glut.h"			// Inclusión de librerías GLUT 
 #include <GL/gl.h>			// Inclusión de librerías GL
 #include <GL/glu.h>			// Inclusión de librerías auxiliare
-#include "esfera.h"
-#include "planeta.h"
+#include <esfera.h>
+#include <Planeta.h>
+#include <Sistema.h>
 
 
 
@@ -23,15 +24,18 @@ int w = 500;
 int h = 500;
 
 GLfloat fAngulo, fAngulo2;
-GLuint index_esfera = esfera();
+GLuint index_esfera;
+
 
 //declaracion de los Planetas de nuestro sistema solar
 
 
 //{distancia,vel_trans,ang_rot,vel_rot,ang_rot,tam
 	//listarender,color1,color2,colro3}
+//TODO: apañar lo del indice de la esfera
 
-Planeta sol = Planeta( 0,0,0,10,0,100, index_esfera,1,1,0 );
+/*
+Planeta sol = Planeta( "sol", 0,0,0,10,0,100, index_esfera,1,1,0 );
 Planeta mercurio = Planeta( 200,5.3,0,50,0,50, index_esfera,1,0,0 );
 Planeta venus = Planeta( 350,8,0,30,0,50, index_esfera,0,1,0 );
 Planeta luna = Planeta( 100,9,0,10,0,20, index_esfera,1,0,0 );
@@ -41,14 +45,19 @@ Planeta marte = Planeta( 800,2,0,10,0,30, index_esfera,0,0,1 );
 Planeta saturno = Planeta( 1100,4,0,20,0,50, index_esfera,1,0,0 );
 Planeta urano = Planeta( 1250,3,0,40,0,30, index_esfera,0,1,0 );
 Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
+*/
 
-Planeta sol_prueba = Planeta( 0., 0., 0., 0.03, 0., 0.25, 0, 1, 0.78, 0.2 );
-Planeta p1 = Planeta( 0.5, 0.03, 0., 0.03, 0., 0.08, 0, 1.f, 0., 0. );
-Planeta p2 = Planeta( 0.7, 0.02, 0., 0.02, 0., 0.06, 0, 0., 1.f, 0. );
-Planeta p3 = Planeta( 0.9, 0.01, 0., 0.01, 0., 0.03, 0, 0., 0., 1.f );
+Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, index_esfera, 1, 0.78, 0.2 );
+Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, index_esfera, 1.f, 0., 0. );
+Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.02, 0., 0.06, index_esfera, 0., 1.f, 0. );
+Planeta p3 = Planeta("p3", 0.9, 0.01, 0., 0.01, 0., 0.03, index_esfera, 0., 0., 1.f );
 
 
 Planeta sistema[] = { sol_prueba, p1, p2, p3 };
+std::vector<Planeta> plts = { sol_prueba, p1, p2, p3 };
+Sistema sis = Sistema(plts);
+
+
 //Planeta sistema[] = { sol_prueba };
 int n_planetas = sizeof(sistema) / sizeof(Planeta);
 
@@ -61,13 +70,15 @@ void idle() {
 // Función de dibujo
 void display(void) {
 	// Limpia los buffer de color y profundidad
+    
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//glMatrixMode(GL_MODELVIEW);
-    for (int i = 0; i < n_planetas; i++) {
-        sistema[i].display();
-        sistema[i].translate();
-        sistema[i].rotate();
+    for (auto & p : sis.planetas()) {
+        p.second.display(index_esfera);
+        p.second.translate();
+        p.second.rotate();
     }
 
 	glutSwapBuffers();
@@ -102,15 +113,17 @@ int main(int argc, char **argv) {
 	// Permite poner nombre a la ventana en la barra de título.
 	glutCreateWindow("Sistema Solar 1.2");
 
+
 	// Inicializa la visualización
 	openGlInit();
+    index_esfera = esfera();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
-    glutReshapeFunc(changeSize);
+    //glutReshapeFunc(changeSize);
 
   
 	glutMainLoop(); // Inicia el lazo de visualización.

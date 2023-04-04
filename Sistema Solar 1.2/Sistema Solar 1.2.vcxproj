@@ -131,11 +131,13 @@
   <ItemGroup>
     <ClInclude Include="headers\esfera.h" />
     <ClInclude Include="headers\Planeta.h" />
+    <ClInclude Include="headers\Sistema.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\esfera.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Planeta.cpp" />
+    <ClCompile Include="source\Sistema.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

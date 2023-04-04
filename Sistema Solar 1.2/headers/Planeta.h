@@ -98,7 +98,6 @@ public:
      *
      * <returns>	A reference to a std::string. </returns>
      **************************************************************************************************/
-
     std::string& orbitsAround();
 
 

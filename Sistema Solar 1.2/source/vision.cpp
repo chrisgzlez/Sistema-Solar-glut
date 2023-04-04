@@ -24,9 +24,6 @@ float aspecto;
 //       -CAMBIAR VALORES DE LOOK AT Y DEL ORTHO
 //       -CAMBIAR EL NEAR Y EL FAR EN LA FUNCION CHANGE SIZE 
 
-
-
-
 void Camara() {
 
     //configuramos la matriz de proyeccion
@@ -51,7 +48,6 @@ void Camara() {
 void teclasEspeciales(int cursor, int x, int y) {
 
     //en funcion del cursor
-    
     switch (cursor) {
         //arriba
         case GLUT_KEY_UP:
@@ -73,18 +69,16 @@ void teclasEspeciales(int cursor, int x, int y) {
         default:
             break;
     }
-        /*Control para que no se pase de 360*/
-        if (alpha >= 360) { alpha -= 360; }
-        
-        if (beta >= 360) { beta -= 360; }
 
-        if (alpha <= -360) { alpha += 360;  }
-        
-        if (beta <= -360) { beta += 360;  }
+    // Evitar overflow
+    if (alpha >= 2 * M_PI) alpha -= 2 * M_PI;
+    if (alpha <= -2 * M_PI) alpha += 2 * M_PI;
+    if (beta >= 2 * M_PI) beta -= 2 * M_PI;
+    if (beta <= -2 * M_PI) beta += 2 * M_PI;
 
 
-        //volvemos a lanzar
-        glutPostRedisplay();
+    //volvemos a lanzar
+    glutPostRedisplay();
 
 }
 
@@ -101,13 +95,7 @@ void changeSize(GLint newWidth, GLint newHeight) {
     glLoadIdentity();
 
     //configuramos la perspectiva (fovy,relacion de aspecto,near,far)
-    std::cout << "Width: " << newWidth
-        << " Height: " << newHeight
-        << " Ratio: " << (float)newWidth / (float)newHeight
-        << std::endl;
-
     gluPerspective(fovy, (float)newWidth / (float)newHeight, .01, 500.);
-    //glutPostRedisplay();
 }
 
 /*

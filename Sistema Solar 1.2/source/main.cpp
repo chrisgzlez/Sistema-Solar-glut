@@ -76,9 +76,13 @@ void display(void) {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+    Camara();
+
     // switch tipos de camara
     // TODO: -Satelites de planeta convertir a map en vez de vector.
     
+    /*
     if (vectoropciones[camara] == "Voyayer") Camara();
     else {
         std::string nombreplaneta = vectoropciones[camara];
@@ -86,6 +90,7 @@ void display(void) {
         else telescopio(sis.planetas()["tierra"], sis.planetas()[nombreplaneta]);
 
     }
+    */
    
     glMatrixMode(GL_MODELVIEW);
 	

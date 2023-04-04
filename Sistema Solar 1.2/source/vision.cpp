@@ -212,13 +212,13 @@ void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
 
     //si el pov es un satelite
     if (1) {
-        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist * sin(PointOffView._angulo_trans * M_PI / 180),
-            (GLdouble)PointOffRefference.dist() * cos(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist * sin(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180),
+        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist() * sin(PointOffView._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist() * sin(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180),
             0, 1, 0);
     }
     else {
-        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist * sin(PointOffView._angulo_trans * M_PI / 180),
-            (GLdouble)PointOffRefference.dist() * cos(PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist * sin(PointOffRefference._angulo_trans * M_PI / 180),
+        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist() * sin(PointOffView._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos(PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist() * sin(PointOffRefference._angulo_trans * M_PI / 180),
             0, 1, 0);
 
     }

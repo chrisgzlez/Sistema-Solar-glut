@@ -1,6 +1,7 @@
 #include <planeta.h>
 //#include <camara.h>
 
+
 Planeta::Planeta() {
     return;
 }

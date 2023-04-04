@@ -14,8 +14,6 @@
 #include <vector>
 #include <string>
 
-class Planeta;
-
 
 class Planeta {
 private:

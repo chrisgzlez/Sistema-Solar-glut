@@ -116,7 +116,6 @@ int main(int argc, char **argv) {
     std::vector<Planeta> plts = { sol_prueba, p1, p2 };
     sis = Sistema(plts);
 
-
 	// Inicializa las GLUT
 	glutInit(&argc, argv);
 

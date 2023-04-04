@@ -37,10 +37,22 @@ void Camara() {
 
     // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
+    
     // Define el tamaño del espacio
     glOrtho(-1 * aspecto, 1 * aspecto, -1, 1, 0.01, 5*DIST_CAMARA);
+    //glOrtho(-1, 1, -1, 1, 0.1, 2);
+    //colocamos la camara en la posicion deseada
+    //gluLookAt(((float)DIST_CAMARA * (float)sin(alpha) * cos(beta)), ((float)DIST_CAMARA * (float)sin(beta)), ((float)DIST_CAMARA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
 
-    // Define la posicion del observador, su punto de referencia y su vector up
+    //gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+
+    // define la posicion del observador dentro del espaciox
+    //gluLookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0);
+    std::cout << "Beta (rad): " << beta
+        << " Beta (grad): " << beta * 180 / M_PI
+        << " Sin Beta: " << sin(beta)
+        << std::endl;
+
     gluLookAt(
         (GLdouble)DIST_CAMARA * cos(alpha) * cos(beta), (GLdouble)DIST_CAMARA * sin(beta), (GLdouble)(-1) * DIST_CAMARA * sin(alpha) * cos(beta),
         0, 0, 0,

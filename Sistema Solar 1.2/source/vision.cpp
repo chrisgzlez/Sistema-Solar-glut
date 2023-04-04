@@ -1,13 +1,17 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "vision.h"
 #include <GL/glu.h>	
-#include <math.h>
 
-#define DISTANCIA 5
+#define DIST_CAMARA 5
 #define INCREMENTO 0.1
 
-float alpha;
-float beta;
+float alpha;    // Angulo con respecto a y (anchura)
+float beta;     // Angulo con respecto a x (altura)
+
 float fovy = 45;
+
 //camara por defecto en modo voayager
 int camara = 1;
 
@@ -30,12 +34,18 @@ void Camara(int w, int h) {
     //matriz identidad
     glLoadIdentity();
 
-    //realizamos el ortho para la multivista
+    // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
-    glOrtho(-3 * aspecto, 3 * aspecto, -3, 3, 0.1, 3);
+    glOrtho(-3 * aspecto, 3 * aspecto, -3, 3, 0.1, DIST_CAMARA);
 
     //colocamos la camara en la posicion deseada
-    gluLookAt(((float)DISTANCIA * (float)sin(alpha) * cos(beta)), ((float)DISTANCIA * (float)sin(beta)), ((float)DISTANCIA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
+    //gluLookAt(((float)DISTANCIA * (float)sin(alpha) * cos(beta)), ((float)DISTANCIA * (float)sin(beta)), ((float)DISTANCIA * cos(alpha) * cos(beta)), 0, 0, 0, 0, cos(beta), 0);
+
+    gluLookAt(
+        (GLdouble)DIST_CAMARA * cos(alpha) * (M_PI / 180), (GLdouble)DIST_CAMARA * sin(beta) * (M_PI / 180), (GLdouble)(-1) * DIST_CAMARA * sin(alpha) * (M_PI / 180),
+        0, 0, 0,
+        0, 1, 0
+    );
 
 }
 

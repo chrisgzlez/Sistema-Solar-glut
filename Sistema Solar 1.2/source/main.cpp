@@ -14,6 +14,7 @@ Practica 4 Sistema Solar 1.2
 #include <esfera.h>
 #include <Planeta.h>
 #include <Sistema.h>
+#include <vision.h>
 
 
 

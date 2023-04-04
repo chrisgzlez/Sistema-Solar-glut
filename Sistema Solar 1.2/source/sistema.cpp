@@ -1,24 +1,35 @@
-#include <Planeta.h>
-//#include <camara.h>
+#include <Sistema.h>
+
+Sistema::Sistema() {
+    return;
+}
+
+Sistema::Sistema(std::vector<Planeta> &planets) {
+    this->add(planets);
+}
 
 
-//fov
-float fovy = 45;
+std::map<const std::string, Planeta> &Sistema::planetas() {
+    return this->_planetas;
+}
 
-void changeSize(GLint newWidth, GLint newHeight) {
+void Sistema::add(Planeta &p) {
+    // Adds to hashmap
+    this->_planetas[p.nombre()] = p;
 
-    //configuaramos el view port al ancho y alto nuevo
-    glViewport(0, 0, newWidth, newHeight);
+    this->nombre_planetas.push_back(p.nombre());
+    for (Planeta s : p.satelites()) {
+        this->nombre_planetas.push_back(s.nombre());
+    }
     
-    //cargamos la matriz de proyeccion
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    
-    //cambiamos la matriz de proyeccion 
-    gluPerspective(fovy, (float)newWidth/(float)newHeight, 1.0, 500);
+}
 
-    //julian no la utiliza ver que hace esta mierda
-    glutPostRedisplay();
-    
-     
+void Sistema::add(std::vector<Planeta> &planets) {
+    for (Planeta p : planets) {
+        this->add(p);
+    }
+}
+
+const std::vector<std::string>& Sistema::showPlanetas() const {
+    return this->nombre_planetas;
 }

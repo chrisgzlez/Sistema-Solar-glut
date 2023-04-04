@@ -134,6 +134,8 @@ public:
 
     void addSatelite(std::vector<Planeta> &satelites);
 
+    void move(unsigned int days);
+
     void showOrbita();
 
     /**************************************************************************************************

@@ -94,7 +94,7 @@ void Planeta::translate(unsigned int time) {
         this->_angulo_trans -= 360.0f;
 }
 
-
+// TODO : Manejar valores negativos
 void Planeta::rotate(unsigned int time) {
     this->_angulo_rot = time * this->_vel_rot;
     if (this->_angulo_rot > 360)
@@ -146,13 +146,6 @@ void Planeta::display(GLuint esfera) {
             //añadimos los ejes al planeta
             ejes();
 
-            // Si tiene satelites le hace el display
-            if (!this->_satelites.empty()) {
-                for (Planeta sat : this->_satelites) {
-                    sat.display(esfera);
-                }
-            }
-
             // Tamanho del planeta
             // Al ser una esfera la escalamos de forma proporcional
             glScalef(this->_size, this->_size, this->_size);
@@ -169,8 +162,25 @@ void Planeta::display(GLuint esfera) {
         // Quitamos las matrices del stack para dejarlo limpio
         // Y no afectar a futuras operaciones
         glPopMatrix();
+
+        // Si tiene satelites le hace el display
+        if (!this->_satelites.empty()) {
+            for (Planeta& sat : this->_satelites) {
+                sat.display(esfera);
+            }
+        }
+
     glPopMatrix();
 
     // HACK: para crear los satélitos, no hacer el pop de la primera matriz
     // De esa forma puedes posicionar los satelites con respecto al planeta
+}
+
+void Planeta::move(unsigned int days) {
+    this->translate(days);
+    this->rotate(days);
+
+    for (Planeta& sat : this->_satelites) {
+        sat.move(days);
+    }
 }

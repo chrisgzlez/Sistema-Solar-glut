@@ -51,27 +51,14 @@ Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
 
 Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, index_esfera, 1, 0.78, 0.2 );
 Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, index_esfera, 1.f, 0., 0. );
-Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.02, 0., 0.06, index_esfera, 0., 1.f, 0. );
-Planeta p3 = Planeta("p3", 0.9, 0.01, 0., 0.01, 0., 0.03, index_esfera, 0., 0., 1.f );
+Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.15, 0., 0.06, index_esfera, 0., 1.f, 0. );
+Planeta p3 = Planeta("p3", 0.1, -0.15, 0., 0.1, 0., 0.03, index_esfera, 0., 0., 1.f );
 
-
-Planeta sistema[] = { sol_prueba, p1, p2, p3 };
-std::vector<Planeta> plts = { sol_prueba, p1, p2, p3 };
-Sistema sis = Sistema(plts);
-
-
-//Planeta sistema[] = { sol_prueba };
-int n_planetas = sizeof(sistema) / sizeof(Planeta);
+Sistema sis;
 
 unsigned int days = 0;
 void timer() {
     days++;
-}
-
-// Actualiza la posicion del planeta en funcion del tiempo
-void movement(Planeta& p) {
-    p.translate(days);
-    p.rotate(days);
 }
 
 
@@ -105,7 +92,7 @@ void display(void) {
 
     for (auto & p : sis.planetas()) {
         p.second.display(index_esfera);
-        movement(p.second);
+        p.second.move(days);
 
     }
 
@@ -124,6 +111,11 @@ void openGlInit() {
 }
 
 int main(int argc, char **argv) {
+
+    p2.addSatelite(p3);
+    std::vector<Planeta> plts = { sol_prueba, p1, p2 };
+    sis = Sistema(plts);
+
 
 	// Inicializa las GLUT
 	glutInit(&argc, argv);

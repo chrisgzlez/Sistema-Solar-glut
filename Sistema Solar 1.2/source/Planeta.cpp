@@ -7,7 +7,7 @@ Planeta::Planeta() {
 }
 
 
-Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLuint render, GLfloat r, GLfloat g, GLfloat b) {
+Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b) {
     this->_name = nombre;
     this->_dist = dist;
     this->_vel_trans = vt;
@@ -15,7 +15,7 @@ Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLflo
     this->_vel_rot = vr;
     this->_angulo_rot = ar;
     this->_size = s;
-    this->_render = render;
+    //this->_render = render;
     this->_red = r;
     this->_green = g;
     this->_blue = b;

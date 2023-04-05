@@ -9,7 +9,6 @@
 class Sistema {
 private:
 
-
     /** <summary>	Hashmap con todos los planetas del sistema y su nombre. </summary> */
     std::map<const std::string, Planeta*> _planetas;
 
@@ -33,6 +32,8 @@ public:
      * <param name="p">	[in,out] A Planeta to process. </param>
      **************************************************************************************************/
     Sistema(std::vector<Planeta*> &planets);
+
+    void cargar_de_archivo(std::string file_path);
 
     void display(GLuint esfera);
 

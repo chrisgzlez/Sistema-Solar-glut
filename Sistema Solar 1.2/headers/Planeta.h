@@ -66,7 +66,7 @@ public:
      * <param name="b">			Color azul rgb. </param>
      **************************************************************************************************/
 
-    Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLuint render, GLfloat r, GLfloat g, GLfloat b);
+    Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLfloat r, GLfloat g, GLfloat b);
 
     /**************************************************************************************************
      * <summary>	Devuelve un puntero de solo lectura del planeta principal. </summary>

@@ -49,10 +49,10 @@ Planeta urano = Planeta( 1250,3,0,40,0,30, index_esfera,0,1,0 );
 Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
 */
 
-Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, index_esfera, 1, 0.78, 0.2 );
-Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, index_esfera, 1.f, 0., 0. );
-Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.15, 0., 0.06, index_esfera, 0., 1.f, 0. );
-Planeta p3 = Planeta("p3", 0.1, -0.15, 0., 0.1, 0., 0.03, index_esfera, 0., 0., 1.f );
+Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, 1, 0.78, 0.2 );
+Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, 1.f, 0., 0. );
+Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.15, 0., 0.06, 0., 1.f, 0. );
+Planeta p3 = Planeta("p3", 0.1, -0.15, 0., 0.1, 0., 0.03, 0., 0., 1.f );
 
 Sistema sis;
 

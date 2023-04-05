@@ -125,13 +125,15 @@ void Planeta::showOrbita() {
     glFlush();
 }
 
-void Planeta::display(GLuint esfera) {
+void Planeta::display(GLuint esfera,bool flag) {
 
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 
         /// Orbita
-        this->showOrbita();
+        if (flag) {
+            this->showOrbita();
+        }
         /// 
 
         // todos los planetas rotan en el mismo plano con respecto al sol
@@ -174,7 +176,7 @@ void Planeta::display(GLuint esfera) {
 
         /// Satelites
         for (Planeta *sat : this->_satelites) {
-            (*sat).display(esfera);
+            (*sat).display(esfera,flag);
         }
         ///
 

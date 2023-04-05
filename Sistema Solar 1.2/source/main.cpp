@@ -19,9 +19,11 @@ Practica 4 Sistema Solar 1.2
 
 #include <iostream>
 
-#define INIT_WIDHT 500
-#define INIT_HEIGHT 500
+#define INIT_WIDHT 1200
+#define INIT_HEIGHT 700
 #define MOVE_INTERVAL 1 //miliseconds
+#define WIN_POS_X 500
+#define WIN_POS_Y 100
 
 
 GLfloat fAngulo, fAngulo2;
@@ -157,7 +159,7 @@ void display(void) {
             // Si es Un Satelite
             telescopio(p, *p.mainPlaneta());
         }
-        else telescopio(sis.planetas()["sol"], p);
+        else telescopio(sis.planetas()["tierra"], p);
     }
     
    
@@ -203,7 +205,7 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(INIT_WIDHT, INIT_HEIGHT);
 	
 	// Fija la posición de la ventana
-	glutInitWindowPosition(1300, 100);
+	glutInitWindowPosition(WIN_POS_X, WIN_POS_Y);
 	
 	// Permite poner nombre a la ventana en la barra de título.
 	glutCreateWindow("Sistema Solar 1.2");

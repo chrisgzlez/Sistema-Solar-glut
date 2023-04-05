@@ -8,8 +8,11 @@
 #include <Sistema.h>
 #include <string.h>
 
-#define DIST_CAMARA 50
+#define DIST_CAMARA 4000
 #define INCREMENTO M_PI/90 // 2 grados en radianes
+#define SIZE_SPACE 3000
+#define FAR 10000
+#define NEAR 1  
 
 float alpha;    // Angulo con respecto a y (anchura)
 float beta;     // Angulo con respecto a x (altura)
@@ -36,7 +39,7 @@ void Camara() {
     // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
     // Define el tamaño del espacio
-    glOrtho(-5 * aspecto, 5 * aspecto, -5, 5, 0.01, 5*DIST_CAMARA);
+    glOrtho(-SIZE_SPACE * aspecto, SIZE_SPACE * aspecto, -SIZE_SPACE, SIZE_SPACE, NEAR, FAR);
 
     // Define la posicion del observador, su punto de referencia y su vector up
     gluLookAt(
@@ -110,7 +113,7 @@ void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
 
     //tenemos que mirar desde la tierra hasta el planeta que queramos mirar.
     
-    gluPerspective(fovy,aspecto, 0.1, 500.);
+    gluPerspective(fovy,aspecto, NEAR, FAR);
 
     //en primer lugar comprobamos si es un satelite.
 

@@ -26,8 +26,8 @@ Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLflo
     this->_blue = b;
 }
 
-const Planeta* Planeta::mainPlaneta() const {
-    return this->_main_planet;
+const Planeta& Planeta::mainPlaneta() const {
+    return *this->_main_planet;
 }
 
 Planeta* const Planeta::mainPlaneta() {

@@ -58,8 +58,8 @@ Planeta sol_prueba = Planeta    ( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, 1, 0
 Planeta p1 = Planeta            ( "p1", 1.5, 0.03, 0., 0.03, 0., 0.08, 1.f, 0., 0. );
 Planeta p2 = Planeta            ( "p2", 1.7, 0.02, 0., 0.15, 0., 0.06, 0., 1.f, 0. );
 Planeta p3 = Planeta            ( "p3", 1.3, 0.015, 0., 0.1, 0., 0.03, 0., 0., 1.f );
-Sistema sis;
-//Sistema sis = Sistema(".\\resources\\datos_planetas.txt");
+//Sistema sis;
+Sistema sis = Sistema(".\\resources\\datos_planetas.txt");
 
 unsigned int days = 0;
 void timer() {
@@ -150,14 +150,14 @@ void display(void) {
     } else
     {
         std::string nombreplaneta = opciones_menu[camara_option];
-        Planeta* p = (sis).planetas()[nombreplaneta];
+        Planeta p = (sis).planetas()[nombreplaneta];
 
-        if ((*p).mainPlaneta() != NULL)
+        if (p.mainPlaneta() != NULL)
         {
             // Si es Un Satelite
-            telescopio(p, (*p).mainPlaneta());
+            telescopio(p, *p.mainPlaneta());
         }
-        else telescopio(sis.planetas()["sol prueba"], p);
+        else telescopio(sis.planetas()["sol"], p);
     }
     
    
@@ -190,8 +190,8 @@ int main(int argc, char **argv) {
 
     p2.addSatelite(&p3);
 
-    std::vector<Planeta*> plts = { &sol_prueba, &p1, &p2, &p3 };
-    sis = Sistema(plts);
+    std::vector<Planeta> plts = { sol_prueba, p1, p2, p3 };
+    //sis = Sistema(plts);
 
 	// Inicializa las GLUT
 	glutInit(&argc, argv);

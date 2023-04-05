@@ -43,7 +43,7 @@ void teclasEspeciales(int cursor, int x, int y);
  * <param name="angulo_obj">   	The angulo object. </param>
  **************************************************************************************************/
 
-void telescopio(Planeta* PointOffView, Planeta* PointOffRefference );
+void telescopio(Planeta& PointOffView, Planeta& PointOffRefference );
 
 /**************************************************************************************************
  * <summary>	Change size.Permite reajustar la venta y el reescalado de esta. </summary>

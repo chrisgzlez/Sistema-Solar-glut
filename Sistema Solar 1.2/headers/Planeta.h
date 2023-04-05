@@ -74,7 +74,7 @@ public:
      * <returns>	Null if it fails, else a pointer to a const Planeta. </returns>
      **************************************************************************************************/
 
-    const Planeta* mainPlaneta() const;
+    const Planeta& mainPlaneta() const;
 
     /**************************************************************************************************
      * <summary>

@@ -100,7 +100,7 @@ void changeSize(GLint newWidth, GLint newHeight) {
 }
 
 // TODO: Facer define de near e far
-void telescopio(Planeta* PointOffView, Planeta* PointOffRefference) {
+void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
 
     //configuramos la matriz de proyeccion
     glMatrixMode(GL_PROJECTION);
@@ -115,15 +115,15 @@ void telescopio(Planeta* PointOffView, Planeta* PointOffRefference) {
     //en primer lugar comprobamos si es un satelite.
 
     //si el pov es un satelite
-    if ((*PointOffView).mainPlaneta() != NULL) {
+    if (PointOffView.mainPlaneta() != NULL) {
         gluLookAt(
-            (GLdouble)(*PointOffRefference).dist() * cos(((*PointOffRefference)._angulo_trans * M_PI / 180)) + (*PointOffView).dist() * cos(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos((PointOffRefference._angulo_trans * M_PI / 180)) + PointOffView.dist() * cos((PointOffView._angulo_trans + PointOffRefference._angulo_trans) * M_PI / 180),
             0,
-            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180) - (*PointOffView).dist() * sin(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+            (GLdouble)(-1) * PointOffRefference.dist() * sin(PointOffRefference._angulo_trans * M_PI / 180) - PointOffView.dist() * sin((PointOffView._angulo_trans + PointOffRefference._angulo_trans) * M_PI / 180),
 
-            (GLdouble)((*PointOffRefference).dist())* cos((*PointOffRefference)._angulo_trans * M_PI / 180),
+            (GLdouble)(PointOffRefference.dist())* cos(PointOffRefference._angulo_trans * M_PI / 180),
             0,
-            (GLdouble)(-1)* ((*PointOffRefference).dist())* sin((*PointOffRefference)._angulo_trans * M_PI / 180),
+            (GLdouble)(-1)* (PointOffRefference.dist())* sin(PointOffRefference._angulo_trans * M_PI / 180),
 
             0, 1, 0);
 
@@ -142,13 +142,13 @@ void telescopio(Planeta* PointOffView, Planeta* PointOffRefference) {
     }
     else { // Si no es satelite
         gluLookAt(
-            (GLdouble)(*PointOffView).dist() * cos((*PointOffView)._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180),
             0,
-            (GLdouble)(-1)*(*PointOffView).dist() * sin((*PointOffView)._angulo_trans * M_PI / 180),
+            (GLdouble)(-1)*PointOffView.dist() * sin(PointOffView._angulo_trans * M_PI / 180),
 
-            (GLdouble)(*PointOffRefference).dist() * cos((*PointOffRefference)._angulo_trans * M_PI / 180),
+            (GLdouble)PointOffRefference.dist() * cos(PointOffRefference._angulo_trans * M_PI / 180),
             0,
-            (GLdouble)(-1)*(*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180),
+            (GLdouble)(-1)*PointOffRefference.dist() * sin(PointOffRefference._angulo_trans * M_PI / 180),
 
             0, 1, 0);
     }

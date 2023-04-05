@@ -10,7 +10,7 @@ class Sistema {
 private:
 
     /** <summary>	Hashmap con todos los planetas del sistema y su nombre. </summary> */
-    std::map<const std::string, Planeta*> _planetas;
+    std::map<const std::string, Planeta> _planetas;
 
     /** <summary>	The nombre planetas. </summary> */
     std::vector<std::string> nombre_planetas;
@@ -31,7 +31,7 @@ public:
      *
      * <param name="p">	[in,out] A Planeta to process. </param>
      **************************************************************************************************/
-    Sistema(std::vector<Planeta*> &planets);
+    Sistema(std::vector<Planeta> &planets);
 
     Sistema(std::string file_path);
 
@@ -49,7 +49,7 @@ public:
      * <returns>	A reference to a std::map&lt;const std::string,Planeta&gt; </returns>
      **************************************************************************************************/
 
-    std::map<const std::string, Planeta*>& planetas();
+    std::map<const std::string, Planeta>& planetas();
 
     /**************************************************************************************************
      * <summary>	Adds a planeta. </summary>
@@ -58,7 +58,7 @@ public:
      *
      * <param name="p">	A Planeta to process. </param>
      **************************************************************************************************/
-    void add(Planeta* p);
+    void add(Planeta p);
 
     /**************************************************************************************************
      * <summary>	Adds a vector of planetas. </summary>
@@ -67,7 +67,7 @@ public:
      *
      * <param name="planets">	A Planeta to process. </param>
      **************************************************************************************************/
-    void add(std::vector<Planeta*> &planets);
+    void add(std::vector<Planeta> &planets);
 
 
     /**************************************************************************************************

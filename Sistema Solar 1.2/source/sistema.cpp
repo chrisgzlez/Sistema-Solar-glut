@@ -8,7 +8,7 @@ Sistema::Sistema() {
     return;
 }
 
-Sistema::Sistema(std::vector<Planeta*> &planets) {
+Sistema::Sistema(std::vector<Planeta> &planets) {
     this->add(planets);
 }
 
@@ -17,20 +17,20 @@ Sistema::Sistema(std::string file_path) {
 }
 
 
-std::map<const std::string, Planeta*> &Sistema::planetas() {
+std::map<const std::string, Planeta> &Sistema::planetas() {
     return this->_planetas;
 }
 
-void Sistema::add(Planeta *p) {
+void Sistema::add(Planeta p) {
     // Adds Main Planet to hashmap
-    this->_planetas[(*p).nombre()] = p;
+    this->_planetas[p.nombre()] = p;
 
     // Adds name to name list
-    this->nombre_planetas.push_back((*p).nombre());
+    this->nombre_planetas.push_back(p.nombre());
 }
 
-void Sistema::add(std::vector<Planeta*> &planets) {
-    for (Planeta *p : planets) {
+void Sistema::add(std::vector<Planeta> &planets) {
+    for (Planeta p : planets) {
         this->add(p);
     }
 }
@@ -97,31 +97,19 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         line_stream >> green;
         line_stream >> blue;
 
-        std::cout << name << " ";
-        std::cout << dist << " ";
-        std::cout << vel_trans << " ";
-        std::cout << angulo_trans << " ";
-        std::cout << vel_rot << " ";
-        std::cout << angulo_rot << " ";
-        std::cout << size << " ";
-        std::cout << red << " ";
-        std::cout << green << " ";
-        std::cout << blue << std::endl;
-
-
         if (first_token == "#") {
             // Satelite
             sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue);
-            this->add(&sat);
+            this->add(sat);
 
             // Cogemos el valor del planeta anterior que seria el 
             // Planeta principal segun el formato del archivo
-            planeta.addSatelite(&sat);
+            this->_planetas[planeta.nombre()].addSatelite(&this->_planetas[name]);
         }
         else {
             // Planeta
             planeta = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue);
-            this->add(&planeta);
+            this->add(planeta);
 
         }        
     }
@@ -133,8 +121,8 @@ void Sistema::display(GLuint esfera,bool flag) {
     for (auto& p : this->_planetas) {
 
         // Si no es un satelite
-        if ((*p.second).mainPlaneta() == NULL) {
-            (*p.second).display(esfera,flag);
+        if (p.second.mainPlaneta() == NULL) {
+            p.second.display(esfera,flag);
         }
     }
 }
@@ -142,8 +130,8 @@ void Sistema::display(GLuint esfera,bool flag) {
 void Sistema::move(unsigned int days) {
     for (auto& p : this->_planetas) {
         // Si no es un satelite
-        if ((*p.second).mainPlaneta() == NULL) {
-            (*p.second).move(days);
+        if (p.second.mainPlaneta() == NULL) {
+            p.second.move(days);
 
         }
     }

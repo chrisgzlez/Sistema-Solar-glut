@@ -86,7 +86,7 @@ void display(void) {
     if (vectoropciones[camara] == "Voyayer") Camara();
     else {
         std::string nombreplaneta = vectoropciones[camara];
-        if (satelite) telescopio(sis.planetas()["tierra"].satelites[nombreplaneta], sis.planetas()["tierra"]);
+        if (satelite) telescopio(sis.planetas()[nombreplaneta], sis.planetas()[nombreplaneta]);
         else telescopio(sis.planetas()["tierra"], sis.planetas()[nombreplaneta]);
 
     }
@@ -100,12 +100,8 @@ void display(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
-    for (auto & p : sis.planetas()) {
-        p.second.display(index_esfera);
-        p.second.move(days);
-
-    }
+    sis.display(index_esfera);
+    sis.move(days);
 
     glFlush();// Intercambia los buffers gráficos disponibles
 	glutSwapBuffers();
@@ -123,8 +119,9 @@ void openGlInit() {
 
 int main(int argc, char **argv) {
 
-    p2.addSatelite(p3);
-    std::vector<Planeta> plts = { sol_prueba, p1, p2 };
+    p2.addSatelite(&p3);
+
+    std::vector<Planeta*> plts = { &sol_prueba, &p1, &p2, &p3 };
     sis = Sistema(plts);
 
 	// Inicializa las GLUT

@@ -21,11 +21,20 @@ Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLflo
     this->_blue = b;
 }
 
+const Planeta* Planeta::mainPlaneta() const {
+    return this->_main_planet;
+}
+
+Planeta* const Planeta::mainPlaneta() {
+    return this->_main_planet;
+}
+
+
 const std::string& Planeta::nombre() const {
     return this->_name;
 }
 
-const std::vector<Planeta>& Planeta::satelites() const {
+const std::vector<Planeta*>& Planeta::satelites() const {
     return this->_satelites;
 }
 
@@ -33,24 +42,18 @@ const GLuint& Planeta::dist() const {
     return this->_dist;
 }
 
-const std::string& Planeta::orbitsAround() const {
-    return this->_orbits_around;
-}
 
-std::string& Planeta::orbitsAround() {
-    return this->_orbits_around;
-}
+void Planeta::addSatelite(Planeta* sat) {
 
-void Planeta::addSatelite(Planeta& sat) {
+    // Ponemos este planeta como el planeta principal
+    sat->_main_planet = this;
+
     // Añadimos satelite al vector de satelites
     this->_satelites.push_back(sat);
-
-    // Actualizamos orbita principal del satelite
-    sat.orbitsAround() = this->nombre();
 }
 
-void Planeta::addSatelite(std::vector<Planeta>& satelites) {
-    for (Planeta &sat : satelites) {
+void Planeta::addSatelite(std::vector<Planeta*>& satelites) {
+    for (Planeta *sat : satelites) {
         this->addSatelite(sat);
     }
 }
@@ -164,12 +167,11 @@ void Planeta::display(GLuint esfera) {
         // Y no afectar a futuras operaciones
         glPopMatrix();
 
-        // Si tiene satelites le hace el display
-        if (!this->_satelites.empty()) {
-            for (Planeta& sat : this->_satelites) {
-                sat.display(esfera);
-            }
+        /// Satelites
+        for (Planeta *sat : this->_satelites) {
+            (*sat).display(esfera);
         }
+        ///
 
     glPopMatrix();
 
@@ -181,7 +183,9 @@ void Planeta::move(unsigned int days) {
     this->translate(days);
     this->rotate(days);
 
-    for (Planeta& sat : this->_satelites) {
-        sat.move(days);
+    for (Planeta* sat : this->_satelites) {
+        (*sat).move(days);
     }
 }
+
+

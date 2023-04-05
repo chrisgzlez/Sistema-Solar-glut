@@ -15,17 +15,23 @@
 #include <string>
 
 
+class Planeta;
+
 class Planeta {
+protected:
+    std::vector<Planeta*> _satelites;    // lista de satelites del planeta
+
 private:
+
+    Planeta* _main_planet = NULL;   // Only applies to subclasses
+
     std::string _name;
-    std::string _orbits_around;  // Planeta/Estrella alrededor del que gira
     GLfloat     _dist;           // Distancia al centro
     GLfloat     _vel_trans;      // Velocidad de transalacion
     GLfloat     _vel_rot;        // Velocidad rotacion
     GLfloat     _size;           // Size del planeta
     GLuint      _render;    // lista de comandos para genera TODO algo
 
-    std::vector<Planeta> _satelites;    // lista de satelites del planeta
     // Telescopio telescopio;
 
     // colores rgb del planeta
@@ -63,6 +69,28 @@ public:
     Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLuint render, GLfloat r, GLfloat g, GLfloat b);
 
     /**************************************************************************************************
+     * <summary>	Devuelve un puntero de solo lectura del planeta principal. </summary>
+     *
+     * <remarks>	Pc, 05/04/2023. </remarks>
+     *
+     * <returns>	Null if it fails, else a pointer to a const Planeta. </returns>
+     **************************************************************************************************/
+
+    const Planeta* mainPlaneta() const;
+
+    /**************************************************************************************************
+     * <summary>
+     *  Devuelve un puntero constante (no se puede cambiar su referencia) del planeta principal.
+     * </summary>
+     *
+     * <remarks>	Pc, 05/04/2023. </remarks>
+     *
+     * <returns>	Null if it fails, else a pointer to a Planeta. </returns>
+     **************************************************************************************************/
+    Planeta* const mainPlaneta();
+
+
+    /**************************************************************************************************
      * <summary>	Gets the nombre. </summary>
      *
      * <remarks>	Pc, 04/04/2023. </remarks>
@@ -82,34 +110,17 @@ public:
     const GLuint& dist() const;
 
     /**************************************************************************************************
-     * <summary>	Orbits around. </summary>
-     *
-     * <remarks>	Pc, 04/04/2023. </remarks>
-     *
-     * <returns>	A reference to a const std::string. </returns>
-     **************************************************************************************************/
-
-    const std::string& orbitsAround() const;
-
-    /**************************************************************************************************
-     * <summary>	Orbits around. </summary>
-     *
-     * <remarks>	Pc, 04/04/2023. </remarks>
-     *
-     * <returns>	A reference to a std::string. </returns>
-     **************************************************************************************************/
-    std::string& orbitsAround();
-
-
-    /**************************************************************************************************
-     * <summary>	Gets the satelites. </summary>
+     * <summary>
+     *  Gets a copy of the satelites. You can modify the properties of the satelites but you cant
+     *  add/remove them.
+     * </summary>
      *
      * <remarks>	Pc, 04/04/2023. </remarks>
      *
      * <returns>	A reference to a const std::vector. </returns>
      **************************************************************************************************/
 
-    const std::vector<Planeta>& satelites() const;
+    const std::vector<Planeta*>& satelites() const;
 
     /**************************************************************************************************
      * <summary>	Adds a satelite. </summary>
@@ -119,7 +130,7 @@ public:
      * <param name="sat">	[in,out] A Planeta to process. </param>
      **************************************************************************************************/
 
-    void addSatelite(Planeta& sat);
+    void addSatelite(Planeta* sat);
 
     /**************************************************************************************************
      * <summary>	Adds a satelite. </summary>
@@ -129,7 +140,7 @@ public:
      * <param name="satelites">	The satelites. </param>
      **************************************************************************************************/
 
-    void addSatelite(std::vector<Planeta> &satelites);
+    void addSatelite(std::vector<Planeta*> &satelites);
 
     void move(unsigned int days);
 

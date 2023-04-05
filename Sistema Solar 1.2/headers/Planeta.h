@@ -151,7 +151,7 @@ public:
      *
      * <param name="esfera">	The esfera. </param>
      **************************************************************************************************/
-    void display(GLuint esfera);
+    void display(GLuint esfera,bool flag);
 
     /**************************************************************************************************
      * <summary>	Trasalada el planeta a lo largo de su orbita. </summary>

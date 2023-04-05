@@ -129,12 +129,12 @@ void Sistema::cargar_de_archivo(std::string file_path) {
 }
 
 
-void Sistema::display(GLuint esfera) {
+void Sistema::display(GLuint esfera,bool flag) {
     for (auto& p : this->_planetas) {
 
         // Si no es un satelite
         if ((*p.second).mainPlaneta() == NULL) {
-            (*p.second).display(esfera);
+            (*p.second).display(esfera,flag);
         }
     }
 }

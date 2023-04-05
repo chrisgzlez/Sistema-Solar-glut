@@ -26,9 +26,11 @@ Practica 4 Sistema Solar 1.2
 
 GLfloat fAngulo, fAngulo2;
 GLuint index_esfera;
+bool showOrbitas= TRUE;
 
 // Variables globales del menu
 int camara_option = 1;
+int camara_option_prev = 1;
 std::vector<std::string> opciones_menu;
 
 
@@ -80,6 +82,9 @@ void onMenu(int opcion) {
     // TODO cambiar esto
     //en funcion del valor de la camara hacemos el telescopio correspondiente.
     camara_option = opcion;
+    if (opcion != 2) {
+        camara_option_prev = camara_option;
+    }
     glutPostRedisplay();
 }
 
@@ -100,9 +105,10 @@ void menu(void) {
     //añadimos las entradas
     glutAddMenuEntry("Voyayer", 1);
     opciones_menu.push_back("Voyayer");
+    glutAddMenuEntry("Toggle Orbitas", 2);
+    opciones_menu.push_back("Toggle Orbitas");
 
-    int index = 2;
-
+    int index = 3;
 
     // Crear las entradas de forma dinamica
     for (std::string nombre_planeta : sis.showPlanetas()) {
@@ -129,6 +135,17 @@ void display(void) {
     if (opciones_menu[camara_option] == "Voyayer")
     {
         Camara();
+
+    }else if(opciones_menu[camara_option] == "Toggle Orbitas") {
+
+        if (showOrbitas == TRUE) {
+            showOrbitas = FALSE;
+        }else {
+            showOrbitas = TRUE;
+        }
+
+        camara_option = camara_option_prev;
+
     } else
     {
         std::string nombreplaneta = opciones_menu[camara_option];
@@ -151,7 +168,7 @@ void display(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    sis.display(index_esfera);
+    sis.display(index_esfera,showOrbitas);
     sis.move(days);
 
     glFlush();// Intercambia los buffers gráficos disponibles

@@ -37,7 +37,7 @@ public:
 
     void cargar_de_archivo(std::string file_path);
 
-    void display(GLuint esfera);
+    void display(GLuint esfera,bool flag);
 
     void move(unsigned int days);
 

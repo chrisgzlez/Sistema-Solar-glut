@@ -12,6 +12,11 @@ Sistema::Sistema(std::vector<Planeta*> &planets) {
     this->add(planets);
 }
 
+Sistema::Sistema(std::string file_path) {
+    this->cargar_de_archivo(file_path);
+}
+
+
 std::map<const std::string, Planeta*> &Sistema::planetas() {
     return this->_planetas;
 }
@@ -56,12 +61,20 @@ void Sistema::cargar_de_archivo(std::string file_path) {
     GLfloat     red;
     GLfloat     green;
     GLfloat     blue;
-
+    int         first_line = 1;
+    
     while (std::getline(file, line)) {
+
         // Permite tratar con la linea como si fuese un stream
         // Y tratar sus valores separados por espacios
         std::stringstream line_stream(line);
         std::string first_token;
+
+        // Carriage Return de windows
+        if (first_line) {
+            line_stream >> first_token;
+            first_line--;
+        }
 
         line_stream >> first_token;
 
@@ -84,6 +97,18 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         line_stream >> green;
         line_stream >> blue;
 
+        std::cout << name << " ";
+        std::cout << dist << " ";
+        std::cout << vel_trans << " ";
+        std::cout << angulo_trans << " ";
+        std::cout << vel_rot << " ";
+        std::cout << angulo_rot << " ";
+        std::cout << size << " ";
+        std::cout << red << " ";
+        std::cout << green << " ";
+        std::cout << blue << std::endl;
+
+
         if (first_token == "#") {
             // Satelite
             sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue);
@@ -100,6 +125,7 @@ void Sistema::cargar_de_archivo(std::string file_path) {
 
         }        
     }
+    file.close();
 }
 
 

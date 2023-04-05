@@ -33,6 +33,8 @@ public:
      **************************************************************************************************/
     Sistema(std::vector<Planeta*> &planets);
 
+    Sistema(std::string file_path);
+
     void cargar_de_archivo(std::string file_path);
 
     void display(GLuint esfera);

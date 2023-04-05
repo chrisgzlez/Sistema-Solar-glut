@@ -5,6 +5,8 @@
 #include <GL/glu.h>	
 #include <iostream>
 #include <Planeta.h>
+#include <Sistema.h>
+#include <string.h>
 
 #define DIST_CAMARA 50
 #define INCREMENTO M_PI/90 // 2 grados en radianes
@@ -14,8 +16,6 @@ float beta;     // Angulo con respecto a x (altura)
 
 float fovy = 45;
 
-//camara por defecto en modo voayager
-int camara = 1;
 
 // Varible global usada para redefinir la perspectiva y el ratio de aspecto de los objetos
 float aspecto;
@@ -36,7 +36,7 @@ void Camara() {
     // realizamos el ortho para la multivista
     // left,right,bottom,top,near,far)
     // Define el tamaño del espacio
-    glOrtho(-1 * aspecto, 1 * aspecto, -1, 1, 0.01, 5*DIST_CAMARA);
+    glOrtho(-5 * aspecto, 5 * aspecto, -5, 5, 0.01, 5*DIST_CAMARA);
 
     // Define la posicion del observador, su punto de referencia y su vector up
     gluLookAt(
@@ -99,92 +99,8 @@ void changeSize(GLint newWidth, GLint newHeight) {
     gluPerspective(fovy, (float)newWidth / (float)newHeight, .01, 500.);
 }
 
-/*
- * Caso camara, manejar
- * Caso de planetas: le pasamos el nombre y hacemos sis.planetas()[nombre_planeta]
- *      Y obtenemos los datos de ese planeta
-*/
-
-void onMenu(int opcion) {
-    // TODO cambiar esto
-    //en funcion del valor de la camara hacemos el telescopio correspondiente.
-    switch (opcion) {
-        case 1:
-            camara = 1;
-            break;
-        case 2:
-            camara = 2;
-            break;
-        case 3:
-            camara = 3;
-            break;
-        case 4:
-            camara = 4;
-            break;
-        case 5:
-            camara = 5;
-            break;
-        case 6:
-            camara = 6;
-            break;
-        case 7:
-            camara = 7;
-            break;
-        case 8:
-            camara = 8;
-            break;
-        case 9:
-            camara = 9;
-            break;
-
-        case 10:
-            camara = 10;
-            break;
-
-        case 11:
-            camara = 11;
-            break;
-        }
-    glutPostRedisplay();
-}
-
-
-void menu(void) {
-    int menuFondo;
-
-    //creamos el menu
-    menuFondo = glutCreateMenu(onMenu);
-
-    //añadimos las entradas
-    glutAddMenuEntry("Voyayer", 1);
-
-    int index = 1;
-
-    /*
-    * Crear las entradas de forma dinamica
-    for (std::string nombre_planeta : sis.showPlanetas()) {
-        glutAddMenuEntry(nombre_planeta, index++);
-        planetas.push_back(nombre_planeta);
-    }
-    */
-
-
-    glutAddMenuEntry("Sol", 2);
-    glutAddMenuEntry("Mercurio", 3);
-    glutAddMenuEntry("Venus", 4);
-    glutAddMenuEntry("Marte", 5);
-    glutAddMenuEntry("Jupiter", 6);
-    glutAddMenuEntry("Saturno", 7);
-    glutAddMenuEntry("Urano", 8);
-    glutAddMenuEntry("Neptuno", 9);
-    glutAddMenuEntry("Luna", 10);
-    glutAddMenuEntry("ISS", 11);
-    
-    //configuramos el boton que permite realizar esto al click derecho
-    glutAttachMenu(GLUT_RIGHT_BUTTON);
-}
-
-void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
+// TODO: Facer define de near e far
+void telescopio(Planeta* PointOffView, Planeta* PointOffRefference) {
 
     //configuramos la matriz de proyeccion
     glMatrixMode(GL_PROJECTION);
@@ -194,21 +110,47 @@ void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
 
     //tenemos que mirar desde la tierra hasta el planeta que queramos mirar.
     
-    gluPerspective(fovy,aspecto, 1, 2000);
+    gluPerspective(fovy,aspecto, 0.1, 500.);
 
     //en primer lugar comprobamos si es un satelite.
 
     //si el pov es un satelite
-    if (1) {
-        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist() * sin(PointOffView._angulo_trans * M_PI / 180),
-            (GLdouble)PointOffRefference.dist() * cos(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist() * sin(PointOffView._angulo_trans + PointOffRefference._angulo_trans * M_PI / 180),
-            0, 1, 0);
-    }
-    else {
-        gluLookAt((GLdouble)PointOffView.dist() * cos(PointOffView._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffView.dist() * sin(PointOffView._angulo_trans * M_PI / 180),
-            (GLdouble)PointOffRefference.dist() * cos(PointOffRefference._angulo_trans * M_PI / 180), 0, (GLdouble)PointOffRefference.dist() * sin(PointOffRefference._angulo_trans * M_PI / 180),
+    if ((*PointOffView).mainPlaneta() != NULL) {
+        gluLookAt(
+            (GLdouble)(*PointOffRefference).dist() * cos(((*PointOffRefference)._angulo_trans * M_PI / 180)) + (*PointOffView).dist() * cos(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+            0,
+            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180) - (*PointOffView).dist() * sin(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+
+            (GLdouble)((*PointOffRefference).dist())* cos((*PointOffRefference)._angulo_trans * M_PI / 180),
+            0,
+            (GLdouble)(-1)* ((*PointOffRefference).dist())* sin((*PointOffRefference)._angulo_trans * M_PI / 180),
+
             0, 1, 0);
 
+        /*
+        gluLookAt(
+            (GLdouble)(*PointOffRefference).dist() * cos(((*PointOffRefference)._angulo_trans * M_PI / 180)) + (*PointOffView).dist() * cos(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+            0,
+            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180) - (*PointOffView).dist() * sin(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
+            
+            (GLdouble)(*PointOffRefference).dist() * cos((*PointOffRefference)._angulo_trans * M_PI / 180),
+            0,
+            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180),
+
+            0, 1, 0);
+        */
+    }
+    else { // Si no es satelite
+        gluLookAt(
+            (GLdouble)(*PointOffView).dist() * cos((*PointOffView)._angulo_trans * M_PI / 180),
+            0,
+            (GLdouble)(-1)*(*PointOffView).dist() * sin((*PointOffView)._angulo_trans * M_PI / 180),
+
+            (GLdouble)(*PointOffRefference).dist() * cos((*PointOffRefference)._angulo_trans * M_PI / 180),
+            0,
+            (GLdouble)(-1)*(*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180),
+
+            0, 1, 0);
     }
 
 

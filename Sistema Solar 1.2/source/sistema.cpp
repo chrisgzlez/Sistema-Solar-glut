@@ -22,13 +22,6 @@ void Sistema::add(Planeta *p) {
 
     // Adds name to name list
     this->nombre_planetas.push_back((*p).nombre());
-
-    // Adds satelites to hashmap and to name list
-    for (Planeta* s : (*p).satelites()) {
-        this->_planetas[(*s).nombre()] = s;
-        this->nombre_planetas.push_back((*s).nombre());
-    }
-    
 }
 
 void Sistema::add(std::vector<Planeta*> &planets) {

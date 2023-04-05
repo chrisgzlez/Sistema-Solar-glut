@@ -5,6 +5,9 @@
 #include <GL/gl.h>			// Inclusión de librerías GL
 #include <GL/glu.h>			// Inclusión de librerías auxiliare
 #include <Planeta.h>
+#include <vector>
+
+
 
 /**************************************************************************************************
  * <summary>	Camara del programa . </summary>
@@ -40,7 +43,7 @@ void teclasEspeciales(int cursor, int x, int y);
  * <param name="angulo_obj">   	The angulo object. </param>
  **************************************************************************************************/
 
-void telescopio(Planeta& PointOffView, Planeta& PointOffRefference );
+void telescopio(Planeta* PointOffView, Planeta* PointOffRefference );
 
 /**************************************************************************************************
  * <summary>	Change size.Permite reajustar la venta y el reescalado de esta. </summary>
@@ -53,20 +56,3 @@ void telescopio(Planeta& PointOffView, Planeta& PointOffRefference );
 
 void changeSize(GLint newWidth, GLint newHeight);
 
-/**************************************************************************************************
- * <summary>	Permite elegir la camara que queramos en el menu y pasarsela al display. </summary>
- *
- * <remarks>	Ivanq, 4/4/2023. </remarks>
- *
- * <param name="opcion">	The opcion. </param>
- **************************************************************************************************/
-
-void onMenu(int opcion);
-
-/**************************************************************************************************
- * <summary>	Creacion y configuracion del menu. </summary>
- *
- * <remarks>	Ivanq, 4/4/2023. </remarks>
- **************************************************************************************************/
-
-void menu();

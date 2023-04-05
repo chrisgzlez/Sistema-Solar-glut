@@ -1,4 +1,9 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <planeta.h>
+#include <iostream>
+
 //#include <camara.h>
 
 
@@ -38,7 +43,7 @@ const std::vector<Planeta*>& Planeta::satelites() const {
     return this->_satelites;
 }
 
-const GLuint& Planeta::dist() const {
+const GLfloat& Planeta::dist() const {
     return this->_dist;
 }
 
@@ -94,15 +99,15 @@ void Planeta::ejes() {
 
 void Planeta::translate(unsigned int time) {
     this->_angulo_trans = time * this->_vel_trans;
-    if (this->_angulo_trans > 360)
-        this->_angulo_trans -= 360.0f;
+    if (this->_angulo_trans >= 2 * M_PI)
+        this->_angulo_trans -= 2 * M_PI;
 }
 
 // TODO : Manejar valores negativos
 void Planeta::rotate(unsigned int time) {
     this->_angulo_rot = time * this->_vel_rot;
-    if (this->_angulo_rot > 360)
-        this->_angulo_rot -= 360.0f;
+    if (this->_angulo_rot > 2 * M_PI)
+        this->_angulo_rot -= 2 * M_PI;
 }
 
 void Planeta::showOrbita() {

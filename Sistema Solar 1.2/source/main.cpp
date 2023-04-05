@@ -17,7 +17,6 @@ Practica 4 Sistema Solar 1.2
 #include <vision.h>
 
 
-
 #include <iostream>
 
 #define INIT_WIDHT 500
@@ -27,6 +26,10 @@ Practica 4 Sistema Solar 1.2
 
 GLfloat fAngulo, fAngulo2;
 GLuint index_esfera;
+
+// Variables globales del menu
+int camara_option = 1;
+std::vector<std::string> opciones_menu;
 
 
 //declaracion de los Planetas de nuestro sistema solar
@@ -49,11 +52,10 @@ Planeta urano = Planeta( 1250,3,0,40,0,30, index_esfera,0,1,0 );
 Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
 */
 
-Planeta sol_prueba = Planeta( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, 1, 0.78, 0.2 );
-Planeta p1 = Planeta( "p1", 0.5, 0.03, 0., 0.03, 0., 0.08, 1.f, 0., 0. );
-Planeta p2 = Planeta("p2", 0.7, 0.02, 0., 0.15, 0., 0.06, 0., 1.f, 0. );
-Planeta p3 = Planeta("p3", 0.1, -0.15, 0., 0.1, 0., 0.03, 0., 0., 1.f );
-
+Planeta sol_prueba = Planeta    ( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, 1, 0.78, 0.2 );
+Planeta p1 = Planeta            ( "p1", 1.5, 0.03, 0., 0.03, 0., 0.08, 1.f, 0., 0. );
+Planeta p2 = Planeta            ( "p2", 1.7, 0.02, 0., 0.15, 0., 0.06, 0., 1.f, 0. );
+Planeta p3 = Planeta            ( "p3", 1.3, 0.015, 0., 0.1, 0., 0.03, 0., 0., 1.f );
 Sistema sis;
 
 unsigned int days = 0;
@@ -68,6 +70,50 @@ void idle() {
 }
 
 
+/*
+ * Caso camara, manejar
+ * Caso de planetas: le pasamos el nombre y hacemos sis.planetas()[nombre_planeta]
+ *      Y obtenemos los datos de ese planeta
+*/
+
+void onMenu(int opcion) {
+    // TODO cambiar esto
+    //en funcion del valor de la camara hacemos el telescopio correspondiente.
+    camara_option = opcion;
+    glutPostRedisplay();
+}
+
+// TODO:
+// Vector opciones
+// HAcer el vector opciones global extern
+// La camara tambien 
+// Con extern algo
+
+void menu(void) {
+    int menuFondo;
+
+    //creamos el menu
+    menuFondo = glutCreateMenu(onMenu);
+
+    opciones_menu.push_back("Nada"); // Para comenzar en la posicion 1
+
+    //añadimos las entradas
+    glutAddMenuEntry("Voyayer", 1);
+    opciones_menu.push_back("Voyayer");
+
+    int index = 2;
+
+
+    // Crear las entradas de forma dinamica
+    for (std::string nombre_planeta : sis.showPlanetas()) {
+        glutAddMenuEntry(nombre_planeta.c_str(), index++);
+        opciones_menu.push_back(nombre_planeta);
+    }
+
+    //configuramos el boton que permite realizar esto al click derecho
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
 // Función de dibujo
 void display(void) {
 
@@ -77,20 +123,25 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-    Camara();
 
-    // switch tipos de camara
     // TODO: -Satelites de planeta convertir a map en vez de vector.
     
-    /*
-    if (vectoropciones[camara] == "Voyayer") Camara();
-    else {
-        std::string nombreplaneta = vectoropciones[camara];
-        if (satelite) telescopio(sis.planetas()[nombreplaneta], sis.planetas()[nombreplaneta]);
-        else telescopio(sis.planetas()["tierra"], sis.planetas()[nombreplaneta]);
+    if (opciones_menu[camara_option] == "Voyayer")
+    {
+        Camara();
+    } else
+    {
+        std::string nombreplaneta = opciones_menu[camara_option];
+        Planeta* p = (sis).planetas()[nombreplaneta];
 
+        if ((*p).mainPlaneta() != NULL)
+        {
+            // Si es Un Satelite
+            telescopio(p, (*p).mainPlaneta());
+        }
+        else telescopio(sis.planetas()["sol prueba"], p);
     }
-    */
+    
    
     glMatrixMode(GL_MODELVIEW);
 	

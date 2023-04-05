@@ -32,8 +32,6 @@ private:
     GLfloat     _size;           // Size del planeta
     GLuint      _render;    // lista de comandos para genera TODO algo
 
-    // Telescopio telescopio;
-
     // colores rgb del planeta
     GLfloat     _red;
     GLfloat     _green;
@@ -107,7 +105,7 @@ public:
      * <returns>	A reference to a const GLuint. </returns>
      **************************************************************************************************/
 
-    const GLuint& dist() const;
+    const GLfloat& dist() const;
 
     /**************************************************************************************************
      * <summary>

@@ -15,12 +15,25 @@ Planeta::Planeta() {
 Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b) {
     this->_name = nombre;
     this->_dist = dist;
+
+    // Translacion
     this->_vel_trans = vt;
-    this->_angulo_trans = at;
+    // Guardamos la posicion inicial
+    this->_angulo_trans_init = at;
+    // Asignamos el angulo inicial al actual
+    this->_angulo_trans = this->_angulo_trans_init;
+
+    // Rotacion
     this->_vel_rot = vr;
-    this->_angulo_rot = ar;
+    // Guardamos la posicion inicial
+    this->_angulo_rot_init = ar;
+    // Asignamos el angulo inicial al actual
+    this->_angulo_rot = this->_angulo_rot_init;
+
     this->_size = s;
     //this->_render = render;
+
+    // Color
     this->_red = r;
     this->_green = g;
     this->_blue = b;
@@ -98,16 +111,16 @@ void Planeta::ejes() {
 
 
 void Planeta::translate(unsigned int time) {
-    this->_angulo_trans = time * this->_vel_trans;
-    if (this->_angulo_trans >= 2 * M_PI)
-        this->_angulo_trans -= 2 * M_PI;
+    this->_angulo_trans = this->_angulo_trans_init + (time * this->_vel_trans);
+    if (this->_angulo_trans >= 360)
+        this->_angulo_trans -= 360;
 }
 
 // TODO : Manejar valores negativos
 void Planeta::rotate(unsigned int time) {
-    this->_angulo_rot = time * this->_vel_rot;
-    if (this->_angulo_rot > 2 * M_PI)
-        this->_angulo_rot -= 2 * M_PI;
+    this->_angulo_rot = this->_angulo_rot_init + (time * this->_vel_rot);
+    if (this->_angulo_rot > 360)
+        this->_angulo_rot -= 360;
 }
 
 void Planeta::showOrbita() {
@@ -141,6 +154,7 @@ void Planeta::display(GLuint esfera,bool flag) {
         // Rotacion de translacion
         // con respecto al eje y en la posicion actual (origen)
         glRotatef(this->_angulo_trans, 0.0, 1.0, 0.0);
+        //glRotatef(180.0, 0.0, 1.0, 0.0);
 
         // Transalcion a la posicion del planeta
         // permite que el valor anterior genere transalacion

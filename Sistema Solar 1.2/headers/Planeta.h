@@ -40,8 +40,10 @@ private:
     void ejes();
 
 public:
-    GLfloat     _angulo_trans;   // Angulo de transalacion
-    GLfloat     _angulo_rot;     // Angulo de rotacion
+    GLfloat     _angulo_trans;          // Angulo de transalacion
+    GLfloat     _angulo_trans_init;     // Angulo de transalacion inicial
+    GLfloat     _angulo_rot;            // Angulo de rotacion
+    GLfloat     _angulo_rot_init;       // Angulo de rotacion
 
     Planeta();
 

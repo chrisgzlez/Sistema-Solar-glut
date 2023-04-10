@@ -115,8 +115,10 @@ void menu(void) {
 
     // Crear las entradas de forma dinamica
     for (std::string nombre_planeta : sis.showPlanetas()) {
-        glutAddMenuEntry(nombre_planeta.c_str(), index++);
-        opciones_menu.push_back(nombre_planeta);
+        if (nombre_planeta != "tierra") {
+            glutAddMenuEntry(nombre_planeta.c_str(), index++);
+            opciones_menu.push_back(nombre_planeta);
+        }
     }
 
     //configuramos el boton que permite realizar esto al click derecho

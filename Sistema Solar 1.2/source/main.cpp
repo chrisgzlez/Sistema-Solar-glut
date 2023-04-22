@@ -35,31 +35,18 @@ int camara_option = 1;
 int camara_option_prev = 1;
 std::vector<std::string> opciones_menu;
 
+//Variables de iluminacion
+GLfloat Ambient[] = { 0.0f, 0.0f,0.0f,1.0f };//no queremos que sea de ambiente
 
-//declaracion de los Planetas de nuestro sistema solar
+//para que la luz sea brillante difusa y especular
+GLfloat Diffuse[] = { 1.0f, 1.0f,1.0f,1.0f };
+GLfloat SpecRef[] = { 1.0f, 1.0f,1.0f,1.0f };
+GLfloat Specular[] = { 1.0f, 1.0f,1.0f,1.0f };
 
+//Variables de definición de la posicion del foco y direccion de iluminacion
+GLfloat LuzPos[] = { 0.0f,0.0f,0.0f,1.0f }; //colocamos la luz en el centro que es donde se encuentra el sol
+GLfloat SpotDir[] = { 1.0f,1.0f,1.0f }; //direccion
 
-//{distancia,vel_trans,ang_rot,vel_rot,ang_rot,tam
-	//listarender,color1,color2,colro3}
-//TODO: apañar lo del indice de la esfera
-
-/*
-Planeta sol = Planeta( "sol", 0,0,0,10,0,100, index_esfera,1,1,0 );
-Planeta mercurio = Planeta( 200,5.3,0,50,0,50, index_esfera,1,0,0 );
-Planeta venus = Planeta( 350,8,0,30,0,50, index_esfera,0,1,0 );
-Planeta luna = Planeta( 100,9,0,10,0,20, index_esfera,1,0,0 );
-Planeta tierra = Planeta( 600,5,0,10,0,80, index_esfera,0,0,1 );
-Planeta jupiter = Planeta( 900,6,0,60,0,60, index_esfera,0,0,1 );
-Planeta marte = Planeta( 800,2,0,10,0,30, index_esfera,0,0,1 );
-Planeta saturno = Planeta( 1100,4,0,20,0,50, index_esfera,1,0,0 );
-Planeta urano = Planeta( 1250,3,0,40,0,30, index_esfera,0,1,0 );
-Planeta neptuno = Planeta( 1350,4.5,0,10,0,50, index_esfera,0,0,1 );
-*/
-
-Planeta sol_prueba = Planeta    ( "sol prueba", 0., 0., 0., 0.03, 0., 0.25, 1, 0.78, 0.2 );
-Planeta p1 = Planeta            ( "p1", 1.5, 0.03, 0., 0.03, 0., 0.08, 1.f, 0., 0. );
-Planeta p2 = Planeta            ( "p2", 1.7, 0.02, 0., 0.15, 0., 0.06, 0., 1.f, 0. );
-Planeta p3 = Planeta            ( "p3", 1.3, 0.015, 0., 0.1, 0., 0.03, 0., 0., 1.f );
 //Sistema sis;
 Sistema sis = Sistema(".\\resources\\datos_planetas.txt");
 
@@ -171,7 +158,7 @@ void display(void) {
     // Cargamos la matriz identidad
     glLoadIdentity();
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     sis.display(index_esfera,showOrbitas);
     sis.move(days);
@@ -192,10 +179,6 @@ void openGlInit() {
 
 int main(int argc, char **argv) {
 
-    p2.addSatelite(&p3);
-
-    std::vector<Planeta> plts = { sol_prueba, p1, p2, p3 };
-    //sis = Sistema(plts);
 
 	// Inicializa las GLUT
 	glutInit(&argc, argv);
@@ -212,14 +195,41 @@ int main(int argc, char **argv) {
 	// Permite poner nombre a la ventana en la barra de título.
 	glutCreateWindow("Sistema Solar 1.2");
 
+    //luces
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE); // Habilita la ocultacion de caras
+    glEnable(GL_NORMALIZE);
 
-	// Inicializa la visualización
-	openGlInit();
+    //definimos las iluminaciones
+   
+    glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, Specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, LuzPos);
+    glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, SpotDir);
+
+    //Efectos de foco
+    glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 179.0f); //179 porque 180 da problemas
+
+    //Activamos las luces
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+
+    //Definimos el seguimiento del color como propiedad luminosa de los materiales
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+    //definimos las propiedades del brillo metalico
+    glMaterialfv(GL_FRONT, GL_SPECULAR, SpecRef);
+    glMateriali(GL_FRONT, GL_SHININESS, 1);
+
     index_esfera = esfera();
 
     glutSpecialFunc(teclasEspeciales);
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
+
+   
 
     // Cosas
     glutReshapeFunc(changeSize);

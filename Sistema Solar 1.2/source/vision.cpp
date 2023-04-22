@@ -130,18 +130,6 @@ void telescopio(Planeta& PointOffView, Planeta& PointOffRefference) {
 
             0, 1, 0);
 
-        /*
-        gluLookAt(
-            (GLdouble)(*PointOffRefference).dist() * cos(((*PointOffRefference)._angulo_trans * M_PI / 180)) + (*PointOffView).dist() * cos(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
-            0,
-            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180) - (*PointOffView).dist() * sin(((*PointOffView)._angulo_trans + (*PointOffRefference)._angulo_trans) * M_PI / 180),
-            
-            (GLdouble)(*PointOffRefference).dist() * cos((*PointOffRefference)._angulo_trans * M_PI / 180),
-            0,
-            (GLdouble)(-1) * (*PointOffRefference).dist() * sin((*PointOffRefference)._angulo_trans * M_PI / 180),
-
-            0, 1, 0);
-        */
     }
     else { // Si no es satelite
         gluLookAt(

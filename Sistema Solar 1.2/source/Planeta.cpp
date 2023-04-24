@@ -16,7 +16,7 @@ Planeta::Planeta() {
 }
 
 
-Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b,GLuint textura) {
+Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b, bool iluminacion) {
     this->_name = nombre;
     this->_dist = dist;
 
@@ -42,8 +42,8 @@ Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLflo
     this->_green = g;
     this->_blue = b;
 
-    //textura 
-    this->_textura = textura;
+    // Iluminacion 
+    this->_iluminacion = iluminacion;
 }
 
 const Planeta& Planeta::mainPlaneta() const {
@@ -65,6 +65,10 @@ const std::vector<Planeta*>& Planeta::satelites() const {
 
 const GLfloat& Planeta::dist() const {
     return this->_dist;
+}
+
+void Planeta::toggle_ilumination() {
+    this->_iluminacion = !this->_iluminacion;
 }
 
 
@@ -177,19 +181,24 @@ void Planeta::showOrbita() {
 
 void Planeta::display(GLuint esfera,bool flag) {
 
+
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 
-    //en el caso del sol hacer disable y ponerlo
-
-    //glDisable(GL_LIGHTING);
-
         /// Orbita
         if (flag) {
+            glDisable(GL_LIGHTING);
             this->showOrbita();
+            glEnable(GL_LIGHTING);
         }
         /// 
         
+
+        // En el caso de ser un astro iluminado
+        // Le dejamos su luz de ambiente
+        if (this->_iluminacion) {
+            glDisable(GL_LIGHTING);
+        }
 
         // todos los planetas rotan en el mismo plano con respecto al sol
 
@@ -229,18 +238,22 @@ void Planeta::display(GLuint esfera,bool flag) {
         // Quitamos las matrices del stack para dejarlo limpio
         // Y no afectar a futuras operaciones
         glPopMatrix();
-        glEnable(GL_LIGHTING);
 
         /// Satelites
         for (Planeta *sat : this->_satelites) {
             (*sat).display(esfera,flag);
         }
         ///
+        
+        // En caso de ser astro iluminado
+        // Volvemos a activar la iluminacion
+        if (this->_iluminacion) {
+            glEnable(GL_LIGHTING);
+        }
 
     glPopMatrix();
 
-    // HACK: para crear los satélitos, no hacer el pop de la primera matriz
-    // De esa forma puedes posicionar los satelites con respecto al planeta
+    
 }
 
 void Planeta::move(unsigned int days) {

@@ -19,6 +19,7 @@ Practica 4 Sistema Solar 1.2
 
 #include <iostream>
 
+
 #define INIT_WIDHT 1200
 #define INIT_HEIGHT 700
 #define MOVE_INTERVAL 1 //miliseconds
@@ -60,6 +61,7 @@ void idle() {
     timer();
     glutPostRedisplay();
 }
+
 
 
 /*
@@ -223,7 +225,7 @@ int main(int argc, char **argv) {
     glMaterialfv(GL_FRONT, GL_SPECULAR, SpecRef);
     glMateriali(GL_FRONT, GL_SHININESS, 1);
 
-    index_esfera = esfera();
+    index_esfera = esferaText();
 
     glutSpecialFunc(teclasEspeciales);
 	glutDisplayFunc(display);// Define las funciones de Callback  
@@ -235,6 +237,16 @@ int main(int argc, char **argv) {
     glutReshapeFunc(changeSize);
     
     menu();
+
+    //  Activa el test de profundidad y oculta caras internas.
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    //	Activa las texturas y el modelo de sombreado suavizado.
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_SMOOTH);
+
+
 
 	glutMainLoop(); // Inicia el lazo de visualización.
 	return 0;

@@ -61,6 +61,7 @@ void Sistema::cargar_de_archivo(std::string file_path) {
     GLfloat     red;
     GLfloat     green;
     GLfloat     blue;
+    GLuint      textura;
     int         first_line = 1;
     
     while (std::getline(file, line)) {
@@ -96,10 +97,11 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         line_stream >> red;
         line_stream >> green;
         line_stream >> blue;
+        line_stream >> textura;
 
         if (first_token == "#") {
             // Satelite
-            sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue);
+            sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue,textura);
             this->add(sat);
 
             // Cogemos el valor del planeta anterior que seria el 
@@ -108,7 +110,7 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         }
         else {
             // Planeta
-            planeta = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue);
+            planeta = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue,textura);
             this->add(planeta);
 
         }        

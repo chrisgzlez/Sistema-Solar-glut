@@ -4,6 +4,10 @@
 #include <planeta.h>
 #include <iostream>
 
+// Es necesario para que el stb_image funcione
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 //#include <camara.h>
 
 
@@ -12,7 +16,7 @@ Planeta::Planeta() {
 }
 
 
-Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b) {
+Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat s, GLfloat r, GLfloat g, GLfloat b,GLuint textura) {
     this->_name = nombre;
     this->_dist = dist;
 
@@ -37,6 +41,9 @@ Planeta::Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLflo
     this->_red = r;
     this->_green = g;
     this->_blue = b;
+
+    //textura 
+    this->_textura = textura;
 }
 
 const Planeta& Planeta::mainPlaneta() const {
@@ -74,6 +81,36 @@ void Planeta::addSatelite(std::vector<Planeta*>& satelites) {
     for (Planeta *sat : satelites) {
         this->addSatelite(sat);
     }
+}
+
+void Planeta::Carga_Texturas() {
+    // load and create a texture 
+    // -------------------------
+
+    glGenTextures(1, &this->_textura);
+    glBindTexture(GL_TEXTURE_2D, this->_textura); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
+    unsigned char* data = stbi_load("terra.bmp", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        //gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_RGB, GL_UNSIGNED_BYTE, data); //con mimap 
+
+    }
+    else
+    {
+        //std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
 }
 
 
@@ -143,7 +180,9 @@ void Planeta::display(GLuint esfera,bool flag) {
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 
-    glEnable(GL_LIGHTING);
+    //en el caso del sol hacer disable y ponerlo
+
+    //glDisable(GL_LIGHTING);
 
         /// Orbita
         if (flag) {

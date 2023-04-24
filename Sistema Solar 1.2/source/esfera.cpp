@@ -1,5 +1,5 @@
 #include <esfera.h>
-
+/*
 GLuint esfera()
 {
     GLuint indice;
@@ -3617,3 +3617,4 @@ GLuint esfera()
 	return indice;
 
 }
+*/

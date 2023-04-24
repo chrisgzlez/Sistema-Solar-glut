@@ -1,17 +1,16 @@
 
+#include <esfera.h>
 
-#include <windows.h>
-#include <stdio.h>
-#include <glut.h>
-#include <gl.h>
-#include <glu.h>
-#include <glaux.h>
-
-int myEsfera() //lista para generar una esfera
+GLuint esferaText() //lista para generar una esfera
 {
-	int indice;
-	indice = glGenLists(1);
-	glNewList(indice, GL_COMPILE);
+    GLuint indice;
+
+    // Genera una lista con 1 único elemento que será nuestra esfera
+    indice = glGenLists(1);
+
+    // Genera un objeto utilizable (indice) de OpenGL
+    glNewList(indice, GL_COMPILE);
+
 
 	glBegin(GL_TRIANGLES);
 	glNormal3f(-0.0247692f, 0.987385f, -0.156387f);

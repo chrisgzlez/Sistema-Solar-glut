@@ -37,6 +37,10 @@ private:
     GLfloat     _green;
     GLfloat     _blue;
 
+    //textura
+    
+    GLuint      _textura;
+
     void ejes();
 
 public:
@@ -66,7 +70,7 @@ public:
      * <param name="b">			Color azul rgb. </param>
      **************************************************************************************************/
 
-    Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLfloat r, GLfloat g, GLfloat b);
+    Planeta(std::string nombre, GLfloat dist, GLfloat vt, GLfloat at, GLfloat vr, GLfloat ar, GLfloat size, GLfloat r, GLfloat g, GLfloat b,GLuint textura);
 
     /**************************************************************************************************
      * <summary>	Devuelve un puntero de solo lectura del planeta principal. </summary>
@@ -139,6 +143,8 @@ public:
      *
      * <param name="satelites">	The satelites. </param>
      **************************************************************************************************/
+
+    void Carga_Texturas();
 
     void addSatelite(std::vector<Planeta*> &satelites);
 

@@ -17,7 +17,9 @@
  *
  * <returns>	An int. </returns>
  **************************************************************************************************/
-GLuint esfera();
+//GLuint esfera();
+
+GLuint esferaText();
 
 // your code
 #endif

@@ -144,7 +144,7 @@ public:
      * <param name="satelites">	The satelites. </param>
      **************************************************************************************************/
 
-    void Carga_Texturas();
+    void Carga_Texturas(char *imagen);
 
     void addSatelite(std::vector<Planeta*> &satelites);
 

@@ -120,12 +120,22 @@ void Sistema::cargar_de_archivo(std::string file_path) {
 }
 
 
-void Sistema::display(GLuint esfera,bool flag) {
+void Sistema::display(GLuint esfera, bool show_orbitas, bool iluminar) {
+
+    if (!iluminar) {
+        glDisable(GL_LIGHT0);
+        glDisable(GL_LIGHTING);
+    }
+    else {
+        glEnable(GL_LIGHT0);
+        glEnable(GL_LIGHTING);
+    }
+
     for (auto& p : this->_planetas) {
 
         // Si no es un satelite
         if (p.second.mainPlaneta() == NULL) {
-            p.second.display(esfera,flag);
+            p.second.display(esfera, show_orbitas, iluminar);
         }
     }
 }
@@ -133,11 +143,13 @@ void Sistema::display(GLuint esfera,bool flag) {
 
 void Sistema::cargarTexturas() {
     for (auto& p : this->_planetas) {
-        p.second.cargaTexturas("./resources/texturas/" + p.second.nombre() + ".jpg");
+        p.second.cargaTexturas((".\\resources\\texturas\\" + p.second.nombre() + ".jpg").c_str());
     }
 }
 
 void Sistema::move(unsigned int days) {
+    
+
     for (auto& p : this->_planetas) {
         // Si no es un satelite
         if (p.second.mainPlaneta() == NULL) {

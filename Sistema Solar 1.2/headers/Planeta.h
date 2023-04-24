@@ -150,7 +150,7 @@ public:
      * <param name="satelites">	The satelites. </param>
      **************************************************************************************************/
 
-    void cargaTexturas(char *imagen);
+    void cargaTexturas(const char *img_path);
 
     void addSatelite(std::vector<Planeta*> &satelites);
 
@@ -165,7 +165,7 @@ public:
      *
      * <param name="esfera">	The esfera. </param>
      **************************************************************************************************/
-    void display(GLuint esfera,bool flag);
+    void display(GLuint esfera, bool show_orbitas, bool iluminacion);
 
     /**************************************************************************************************
      * <summary>	Trasalada el planeta a lo largo de su orbita. </summary>

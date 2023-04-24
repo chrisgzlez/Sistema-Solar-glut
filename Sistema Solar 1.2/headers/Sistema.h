@@ -37,7 +37,7 @@ public:
 
     void cargar_de_archivo(std::string file_path);
 
-    void display(GLuint esfera,bool flag);
+    void display(GLuint esfera, bool show_orbitas, bool iluminar);
 
     void move(unsigned int days);
 

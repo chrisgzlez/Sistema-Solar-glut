@@ -30,6 +30,7 @@ Practica 4 Sistema Solar 1.2
 GLfloat fAngulo, fAngulo2;
 GLuint index_esfera;
 bool showOrbitas= TRUE;
+bool iluminar= TRUE;
 
 // Variables globales del menu
 int camara_option = 1;
@@ -104,8 +105,8 @@ void menu(void) {
     glutAddMenuEntry("Toggle Orbitas", index++);
     opciones_menu.push_back("Toggle Orbitas");
     
-    glutAddMenuEntry("Toggle Sol", index++);
-    opciones_menu.push_back("Toggle Sol");
+    glutAddMenuEntry("Toggle Iluminacion", index++);
+    opciones_menu.push_back("Toggle Iluminacion");
 
 
     // Crear las entradas de forma dinamica
@@ -145,9 +146,9 @@ void display(void) {
 
         camara_option = camara_option_prev;
 
-    } else if (opciones_menu[camara_option] == "Toggle Sol") {
+    } else if (opciones_menu[camara_option] == "Toggle Iluminacion") {
 
-        sis.planetas()["sol"].toggle_ilumination();
+        iluminar = !iluminar;
 
         camara_option = camara_option_prev;
 
@@ -173,7 +174,7 @@ void display(void) {
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    sis.display(index_esfera,showOrbitas);
+    sis.display(index_esfera, showOrbitas, iluminar);
     sis.move(days);
 
     glFlush();// Intercambia los buffers gráficos disponibles
@@ -237,7 +238,8 @@ int main(int argc, char **argv) {
     glMateriali(GL_FRONT, GL_SHININESS, 1);
 
     //cargamos las texturas de todos los cuerpos
-    
+    sis.cargarTexturas();
+
 
     index_esfera = esferaText();
 

@@ -87,7 +87,7 @@ void Planeta::addSatelite(std::vector<Planeta*>& satelites) {
     }
 }
 
-void Planeta::cargaTexturas(char* imagen) {
+void Planeta::cargaTexturas(const char* img_path) {
     // load and create a texture 
     // -------------------------
 
@@ -184,27 +184,33 @@ void Planeta::showOrbita() {
     glFlush();
 }
 
-void Planeta::display(GLuint esfera,bool flag) {
+void Planeta::display(GLuint esfera, bool show_orbitas, bool iluminacion) {
 
 
     // Pusheamos la matrix identidad al stack
     glPushMatrix();
 
+    glBindTexture(GL_TEXTURE_2D, 0);
+
         /// Orbita
-        if (flag) {
-            glDisable(GL_LIGHTING);
-            this->showOrbita();
-            glEnable(GL_LIGHTING);
+        if (show_orbitas) {
+            if (iluminacion) {
+                glDisable(GL_LIGHTING);
+                this->showOrbita();
+                glEnable(GL_LIGHTING);
+            }
+            else {
+                this->showOrbita();
+            }
         }
         /// 
         
 
         // En el caso de ser un astro iluminado
         // Le dejamos su luz de ambiente
-        if (this->_iluminacion) {
+        if (this->_iluminacion && iluminacion) {
             glDisable(GL_LIGHTING);
         }
-        glBindTexture(GL_TEXTURE_2D, 0);
 
         // todos los planetas rotan en el mismo plano con respecto al sol
 
@@ -233,7 +239,9 @@ void Planeta::display(GLuint esfera,bool flag) {
             glScalef(this->_size, this->_size, this->_size);
 
             // Color del planeta en rgb
-            glColor3f(this->_red, this->_green, this->_blue);
+            //glColor3f(this->_red, this->_green, this->_blue);
+            
+            glBindTexture(GL_TEXTURE_2D, this->_textura);
 
             // Crea la esfera
             // Ejecuta la lista de comandos necesarios para crear
@@ -247,18 +255,17 @@ void Planeta::display(GLuint esfera,bool flag) {
 
         /// Satelites
         for (Planeta *sat : this->_satelites) {
-            (*sat).display(esfera,flag);
+            (*sat).display(esfera, show_orbitas, iluminacion);
         }
         ///
         
         // En caso de ser astro iluminado
         // Volvemos a activar la iluminacion
-        if (this->_iluminacion) {
+        if (this->_iluminacion && iluminacion) {
             glEnable(GL_LIGHTING);
         }
 
     glPopMatrix();
-
     
 }
 

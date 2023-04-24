@@ -87,32 +87,37 @@ void Planeta::addSatelite(std::vector<Planeta*>& satelites) {
     }
 }
 
-void Planeta::Carga_Texturas(char* imagen) {
+void Planeta::Carga_Texturas(char* img_path) {
     // load and create a texture 
     // -------------------------
 
     glGenTextures(1, &this->_textura);
     glBindTexture(GL_TEXTURE_2D, this->_textura); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
+
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char* data = stbi_load(imagen, &width, &height, &nrChannels, 0);
-    if (data)
-    {
+    unsigned char* data = stbi_load(img_path, &width, &height, &nrChannels, 0);
+    
+    // Manejo de errores
+    if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
         //gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, width, height, GL_RGB, GL_UNSIGNED_BYTE, data); //con mimap 
 
-    }
-    else
-    {
+    } else {
         //std::cout << "Failed to load texture" << std::endl;
     }
+
+    // Libera recursos
     stbi_image_free(data);
 
 }

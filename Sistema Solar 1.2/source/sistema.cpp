@@ -130,6 +130,13 @@ void Sistema::display(GLuint esfera,bool flag) {
     }
 }
 
+
+void Sistema::cargarTexturas() {
+    for (auto& p : this->_planetas) {
+        p.second.cargaTexturas("./resources/texturas/" + p.second.nombre() + ".jpg");
+    }
+}
+
 void Sistema::move(unsigned int days) {
     for (auto& p : this->_planetas) {
         // Si no es un satelite

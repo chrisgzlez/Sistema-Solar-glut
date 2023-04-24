@@ -80,6 +80,8 @@ public:
      **************************************************************************************************/
 
     const std::vector<std::string>& showPlanetas() const;
+
+    void cargarTexturas();
 };
 
 

@@ -148,6 +148,19 @@
   <ItemGroup>
     <Text Include="resources\datos_planetas.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\texturas\2k_earth_daymap.jpg" />
+    <Image Include="resources\texturas\2k_eris_fictional.jpg" />
+    <Image Include="resources\texturas\2k_jupiter.jpg" />
+    <Image Include="resources\texturas\2k_mars.jpg" />
+    <Image Include="resources\texturas\2k_mercury.jpg" />
+    <Image Include="resources\texturas\2k_moon.jpg" />
+    <Image Include="resources\texturas\2k_neptune.jpg" />
+    <Image Include="resources\texturas\2k_saturn.jpg" />
+    <Image Include="resources\texturas\2k_sun.jpg" />
+    <Image Include="resources\texturas\2k_uranus.jpg" />
+    <Image Include="resources\texturas\2k_venus_surface.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

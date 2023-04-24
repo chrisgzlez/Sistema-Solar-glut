@@ -236,6 +236,9 @@ int main(int argc, char **argv) {
     glMaterialfv(GL_FRONT, GL_SPECULAR, SpecRef);
     glMateriali(GL_FRONT, GL_SHININESS, 1);
 
+    //cargamos las texturas de todos los cuerpos
+    
+
     index_esfera = esferaText();
 
     glutSpecialFunc(teclasEspeciales);

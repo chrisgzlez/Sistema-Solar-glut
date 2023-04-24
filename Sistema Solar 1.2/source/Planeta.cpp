@@ -87,7 +87,7 @@ void Planeta::addSatelite(std::vector<Planeta*>& satelites) {
     }
 }
 
-void Planeta::Carga_Texturas(char* imagen) {
+void Planeta::cargaTexturas(char* imagen) {
     // load and create a texture 
     // -------------------------
 
@@ -199,6 +199,7 @@ void Planeta::display(GLuint esfera,bool flag) {
         if (this->_iluminacion) {
             glDisable(GL_LIGHTING);
         }
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         // todos los planetas rotan en el mismo plano con respecto al sol
 

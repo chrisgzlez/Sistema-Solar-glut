@@ -51,6 +51,7 @@ public:
 
     std::map<const std::string, Planeta>& planetas();
 
+
     /**************************************************************************************************
      * <summary>	Adds a planeta. </summary>
      *

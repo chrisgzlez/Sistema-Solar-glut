@@ -52,13 +52,13 @@ GLfloat SpotDir[] = { 1.0f,1.0f,1.0f }; //direccion
 Sistema sis = Sistema(".\\resources\\datos_planetas.txt");
 
 unsigned int days = 0;
-void timer() {
+void timer(int a) {
     days++;
+    glutTimerFunc(2, timer, 0);
 }
 
 
 void idle() {
-    timer();
     glutPostRedisplay();
 }
 
@@ -74,7 +74,7 @@ void onMenu(int opcion) {
     // TODO cambiar esto
     //en funcion del valor de la camara hacemos el telescopio correspondiente.
     camara_option = opcion;
-    if (opcion != 2) {
+    if (opcion != 2 && opcion != 3) {
         camara_option_prev = camara_option;
     }
     glutPostRedisplay();
@@ -93,14 +93,20 @@ void menu(void) {
     menuFondo = glutCreateMenu(onMenu);
 
     opciones_menu.push_back("Nada"); // Para comenzar en la posicion 1
+    
+    int index = 1;
 
     //añadimos las entradas
-    glutAddMenuEntry("Voyayer", 1);
+    glutAddMenuEntry("Voyayer", index++);
     opciones_menu.push_back("Voyayer");
-    glutAddMenuEntry("Toggle Orbitas", 2);
-    opciones_menu.push_back("Toggle Orbitas");
 
-    int index = 3;
+
+    glutAddMenuEntry("Toggle Orbitas", index++);
+    opciones_menu.push_back("Toggle Orbitas");
+    
+    glutAddMenuEntry("Toggle Sol", index++);
+    opciones_menu.push_back("Toggle Sol");
+
 
     // Crear las entradas de forma dinamica
     for (std::string nombre_planeta : sis.showPlanetas()) {
@@ -126,11 +132,10 @@ void display(void) {
 
     // TODO: -Satelites de planeta convertir a map en vez de vector.
     
-    if (opciones_menu[camara_option] == "Voyayer")
-    {
+    if (opciones_menu[camara_option] == "Voyayer") {
         Camara();
 
-    }else if(opciones_menu[camara_option] == "Toggle Orbitas") {
+    } else if(opciones_menu[camara_option] == "Toggle Orbitas") {
 
         if (showOrbitas == TRUE) {
             showOrbitas = FALSE;
@@ -140,8 +145,14 @@ void display(void) {
 
         camara_option = camara_option_prev;
 
-    } else
-    {
+    } else if (opciones_menu[camara_option] == "Toggle Sol") {
+
+        sis.planetas()["sol"].toggle_ilumination();
+
+        camara_option = camara_option_prev;
+
+    } else {
+
         std::string nombreplaneta = opciones_menu[camara_option];
         Planeta p = (sis).planetas()[nombreplaneta];
 
@@ -230,6 +241,7 @@ int main(int argc, char **argv) {
     glutSpecialFunc(teclasEspeciales);
 	glutDisplayFunc(display);// Define las funciones de Callback  
 	glutIdleFunc(idle);
+    timer(0);
 
    
 

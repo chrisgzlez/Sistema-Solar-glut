@@ -21,6 +21,7 @@ std::map<const std::string, Planeta> &Sistema::planetas() {
     return this->_planetas;
 }
 
+
 void Sistema::add(Planeta p) {
     // Adds Main Planet to hashmap
     this->_planetas[p.nombre()] = p;
@@ -61,7 +62,7 @@ void Sistema::cargar_de_archivo(std::string file_path) {
     GLfloat     red;
     GLfloat     green;
     GLfloat     blue;
-    GLuint      textura;
+    bool        iluminacion;
     int         first_line = 1;
     
     while (std::getline(file, line)) {
@@ -97,11 +98,11 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         line_stream >> red;
         line_stream >> green;
         line_stream >> blue;
-        line_stream >> textura;
+        line_stream >> iluminacion;
 
         if (first_token == "#") {
             // Satelite
-            sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue,textura);
+            sat = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue, iluminacion);
             this->add(sat);
 
             // Cogemos el valor del planeta anterior que seria el 
@@ -110,7 +111,7 @@ void Sistema::cargar_de_archivo(std::string file_path) {
         }
         else {
             // Planeta
-            planeta = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue,textura);
+            planeta = Planeta(name, dist, vel_trans, angulo_trans, vel_rot, angulo_rot, size, red, green, blue, iluminacion);
             this->add(planeta);
 
         }        
